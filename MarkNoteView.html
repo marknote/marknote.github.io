@@ -31,7 +31,51 @@
 
     <div class="page-content">
       <div class="wrapper">
-        <div class="home"><h1 class="page-heading">Posts</h1><ul class="post-list"><li><span class="post-meta">19 Dec 2015</span><h2><a class="post-link" href="MarkNote 中文说明.html">MarkNote 中文说明</a></h2></li><li><span class="post-meta">10 Dec 2015</span><h2><a class="post-link" href="MarkNoteView.html">MarkNoteView</a></h2></li><li><span class="post-meta">29 Nov 2015</span><h2><a class="post-link" href="MarkNote.html">MarkNote</a></h2></li><li><span class="post-meta">27 Nov 2015</span><h2><a class="post-link" href="MarkNote Bundle.html">MarkNote Bundle</a></h2></li><li><span class="post-meta">22 Nov 2015</span><h2><a class="post-link" href="MarkNotes 中文说明.html">MarkNotes 中文说明</a></h2></li><li><span class="post-meta">19 Nov 2015</span><h2><a class="post-link" href="MarkNote Parser .html">MarkNote Parser </a></h2></li><li><span class="post-meta">19 Nov 2015</span><h2><a class="post-link" href="MarkNotes.html">MarkNotes</a></h2></li><li><span class="post-meta">16 Nov 2015</span><h2><a class="post-link" href="Another test.html">Another test</a></h2></li><li><span class="post-meta">1 Jan 1970</span><h2><a class="post-link" href="About.html">About</a></h2></li></ul></div>
+          <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+              
+              <header class="post-header">
+                  
+                  <p class="post-meta"><time datetime="10 Dec 2015" itemprop="datePublished">10 Dec 2015</time></p>
+              </header>
+              
+              <div class="post-content" itemprop="articleBody">
+                  <h1>MarkNoteView</h1><p>A UITextView category to highlight MarkDown syntax.<br/></p>
+<ul>
+<li><p>Set background color for <strong>code</strong> blocks</li>
+<li>Highlight <strong>html</strong> tags</li>
+<li>Highlight <strong>links</strong> and <strong>image</strong> tags</li>
+</ul>
+</p>
+</ul>
+<p>A simple demo has been provided in the code<br/></p>
+<p><img src="https://raw.githubusercontent.com/marknote/MarkNoteView/master/screen.png" alt="Screen" /><br/></p>
+<h2>Usage</h2><ul>
+<li><p>Put a <code>UITextView</code> on you UI either by InterfaceBuilder or code</li>
+<li>Copy and add all files under <code>MarkNoteView</code> sub folder into your project</li>
+<li>Include the head file in your viewcontroller</li>
+</ul>
+</p>
+<pre class="no-highlight">
+
+#import "UITextView+MarkNote.h"</pre>
+<li><p>When your text changes, call <code>updateSyntax </code> method</li>
+</p>
+<pre class="no-highlight">
+
+- (void)textViewDidChange:(UITextView *)textView{
+    
+    [_textView updateSyntax];
+}</pre>
+<li><p>That is it!</li>
+</p>
+</ul>
+<p>Feel free to check the demo app<br/><h2>App</h2></p>
+<p>MarkNoteView is used in my app <a href="https://itunes.apple.com/us/app/marknote/id991297585?ls=1&mt=8">MarkNote</a><br/></p>
+<h2>Questions and feedback</h2><p>Twit me @markmarknote https://twitter.com/markmarknote</p>
+
+              </div>
+              
+          </article>
       </div>
     </div>
     <footer class="site-footer">
