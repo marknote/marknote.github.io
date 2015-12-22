@@ -1,0 +1,52 @@
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+              
+              <header class="post-header">
+                  
+                  <p class="post-meta"><time datetime="22 Dec 2015" itemprop="datePublished">22 Dec 2015</time></p>
+              </header>
+              
+              <div class="post-content" itemprop="articleBody">
+                  <h1>iOS几行代码让界面变圆角</h1><p>categories: 开发随笔<br/></p>
+<p>最近有一些比较流行的应用，界面都是圆角的。比如Memopad,Pinterest之类的，都是。<br/>琢磨了一下，发现这个其实很简单。我们只需要在UIView上做点功夫就可以了。<br/>创建一个UIView的Category，名为<code></code><code>UIView+RoundCorner</code><code></code>,在头文件<code></code><code>UIView+RoundCorner.h</code><code></code>中声明如下：</p>
+<pre class="no-highlight">
+
+#import &lt;UIKit/UIKit.h&gt;
+@interface UIView (RoundCorner)
+-(void)makeRoundedCorner:(CGFloat)cornerRadius;
+@end</pre>
+<p>在实现文件<code></code><code>UIView+RoundCorner.h</code><code></code>代码如下：</p>
+<pre class="no-highlight">
+
+#import "UIView+RoundCorner.h"
+
+@implementation UIView(RoundCorner)
+
+-(void)makeRoundedCorner:(CGFloat)cornerRadius
+{
+    CALayer *roundedlayer = [self layer];
+    [roundedlayer setMasksToBounds:YES];
+    [roundedlayer setCornerRadius:cornerRadius];
+}
+@end</pre>
+<h3>使用方法</h3><h4>让某个UI元素变圆角</h4><p>对所有UIView或者其派生类，直接使用该方法即可，比如下面的代码让一个UIButton变圆角了：</p>
+<pre class="no-highlight">
+
+[btn makeRoundedCorner:12.0f];</pre>
+<p>疗效如下(为了让疗效看起来更明显，我把按钮弄黑了):<br/></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1113197-593d958c6afec14d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png" /><br/><h4>让整个界面变圆角</h4>只需要在ViewContolloer中调用这个方法就好了，比如：</p>
+<pre class="no-highlight">
+
+[self.view makeRoundedCorner:12.0f];</pre>
+<p>如果你的ViewController在<code></code><code>UITabBarController</code><code></code>中,你只需要调用这个方法就可以让整个界面所有的界面都变成圆角的。比如</p>
+<pre class="no-highlight">
+
+ if (self.parentViewController) {
+        [self.parentViewController.view makeRoundedCorner:12.0f];
+    }
+</pre>
+<p>疗效如下：<br/><img src="http://upload-images.jianshu.io/upload_images/1113197-ff6bf200261b1a8e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="app" /></p>
+
+              </div>
+              
+</article>

@@ -1,0 +1,107 @@
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+              
+              <header class="post-header">
+                  
+                  <p class="post-meta"><time datetime="22 Dec 2015" itemprop="datePublished">22 Dec 2015</time></p>
+              </header>
+              
+              <div class="post-content" itemprop="articleBody">
+                  <h1>MarkNoteParser - 用Swift/Obj-c实现的markdown解析器</h1><p>categories:开发随笔<br/></p>
+<p>我用Obj-c和Swfit实现了一个简单的markdown解析器，源代码放在github上了。<br/>Objective-C 版本:    https://github.com/marknote/MarkNoteParserObjC<br/>Swift 版本: https://github.com/marknote/MarknoteParser<br/></p>
+<h2>缘由</h2><p>我有一个小应用 <a href="https://itunes.apple.com/cn/app/marknote/id991297585?ls=1&mt=8">MarkNote</a> ，这是一个使用markdown语法来记笔记的小工具。<br/>最开始的时候, 我使用 <a href="https://github.com/chjj/marked">marked</a> 来把 markdown 渲染为HTML。marked使用起来简单。不过，一个native的应用居然用基于javascript的引擎来做解析，心里总觉得有点不爽 :)<br/>找了找没找到合适的<br/>基于Swfit/Object-c实现的 markdown解析起 , 我决定自己轮子一个。于是就有了这个项目。<br/>一开始我只是实现了Swfit版本，后来xcode升级到7.0之后，swift的应用文件生成很大，很多时候都大于40m（当然，app store最后会优化，尺寸大大减少）。于是觉得obj-c也很有必要，就又一口气撸了一个 obj-c版本的。<br/></p>
+<h2>使用方法</h2><h3>swift 版本</h3><ul>
+<li><p>直接拷贝以下2个文件到你的工程中:</li>
+</ul>
+-- <strong>StringExtensions.swift</strong> ,  String 类扩展;<br/>-- <strong>MarkNoteParser.swift</strong>, 这是解析器类;<br/></ul>
+</p>
+<ul>
+<li><p>在你的代码中就直接可以调用 <code></code><code>MarkNoteParser.toHtml()</code><code></code> 把markdown文本转为HTML 字符, 用法如下:</li>
+</ul>
+</p>
+<pre class="prettyprint lang-swift">
+
+func markdown(input :String)-&gt;String{
+        let result = MarkNoteParser.toHtml(input)
+        println("input: \(input) result:\(result)")
+        return result
+    }</pre>
+</ul>
+<h3>objective-c 版本</h3><ul>
+<li><p>把 &quot;MarkNoteParserOC&quot; 目录下的所有文件拷贝到你的工程中 , 然后在你的代码中引入头文件：</li>
+</ul>
+</p>
+<pre class="prettyprint lang-objective-c">
+
+#import "MarkNoteParser.h"</pre>
+</ul>
+<p>-然后你就可以使用 MarkNoteParser 来解析markdown了，示例如下:<br/></p>
+<pre class="prettyprint lang-objective-c">
+
+NSString* result = [MarkNoteParser toHtml:input];
+return result;</pre>
+<h2>特点</h2><h3>标题支持</h3><pre class="prettyprint lang-markdown">
+
+# H1
+## H2
+### H3</pre>
+<p>转换为:<br/></p>
+<pre class="prettyprint lang-html">
+
+&lt;h1&gt;H1&lt;/h1&gt;&lt;h2&gt;H2&lt;/h2&gt;&lt;h3&gt;H3&lt;/h3&gt;</pre>
+<h3>粗体斜体Emphasis支持</h3><pre class="prettyprint lang-markdown">
+
+Emphasis, aka italics, with *asterisks* or _underscores_.
+Strong emphasis, aka bold, with **asterisks** or __underscores__.
+Strikethrough uses two tildes. ~~Scratch this.~~</pre>
+<p>转换为:<br/></p>
+<pre class="prettyprint lang-html">
+
+&lt;p&gt;Emphasis, aka italics, with &lt;em&gt;asterisks&lt;/em&gt; or &lt;em&gt;underscores&lt;/em&gt;.&lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;Strong emphasis, aka bold, with &lt;strong&gt;asterisks&lt;/strong&gt; or &lt;strong&gt;underscores&lt;/strong&gt;.&lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;Strikethrough uses two tildes. &lt;u&gt;Scratch this.&lt;/u&gt;&lt;br/&gt;&lt;/p&gt;</pre>
+<h3>链接支持</h3><pre class="prettyprint lang-markdown">
+
+[I'm an inline-style link](https://www.google.com)
+[I'm an inline-style link with title](https://www.google.com "Google's Homepage")</pre>
+<p>转换为:<br/></p>
+<pre class="prettyprint lang-html">
+
+&lt;p&gt;&lt;a href="https://www.google.com"&gt;I'm an inline-style link&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href="https://www.google.com" title="Google's Homepage"&gt;I'm an inline-style link with title&lt;/a&gt;&lt;br/&gt;&lt;/p&gt;</pre>
+<h3>图片支持</h3><pre class="prettyprint lang-markdown">
+
+![alt text](https://avatars3.githubusercontent.com/u/12975088?v=3&s=40 "Logo Title")</pre>
+<p>转换为:</p>
+<pre class="prettyprint lang-html">
+
+&lt;img src="https://avatars3.githubusercontent.com/u/12975088?v=3&s=40" title="Logo Title" alt="alt text" /&gt;</pre>
+<h3>代码支持</h3><h3>代码支持</h3><p><pre class=&quot;lang-markdown&quot;></p>
+<pre class="no-highlight">
+
+var s = "JavaScript syntax highlighting";
+alert(s);</pre>
+<p></pre><br/></p>
+<p>转换为:</p>
+<pre class="prettyprint lang-html">
+
+&lt;pre class="lang-javascript"&gt;
+var s = "JavaScript syntax highlighting";
+alert(s);
+&lt;/pre&gt;</pre>
+<h3>表格支持</h3><pre class="prettyprint lang-markdown">
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |</pre>
+<p>转换为:<br/></p>
+<pre class="prettyprint lang-html">
+
+&lt;table&gt;&lt;tr&gt;&lt;th&gt; Tables        &lt;/th&gt;&lt;th&gt; Are           &lt;/th&gt;&lt;th style="text-align: center;"&gt; Cool &lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; col 3 is      &lt;/td&gt;&lt;td&gt; right-aligned &lt;/td&gt;&lt;td style="text-align: center;"&gt; $1600 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; col 2 is      &lt;/td&gt;&lt;td&gt; centered      &lt;/td&gt;&lt;td style="text-align: center;"&gt;   $12 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; zebra stripes &lt;/td&gt;&lt;td&gt; are neat      &lt;/td&gt;&lt;td style="text-align: center;"&gt;    $1 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;The outer pipes (|) are optional, and you don't need to make the raw Markdown line up prettily. You can also use inline Markdown.&lt;br/&gt;&lt;/p&gt;</pre>
+<h2>问题反馈</h2><p>如果你有任何问题或者建议，可以在这里给我反馈。谢谢！</p>
+
+              </div>
+              
+</article>
