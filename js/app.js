@@ -1,16 +1,45 @@
 function loadArticle(title){
-    //var url = encodeURI(title + ".html");
-    //var url = title + ".html";
     var url = encodeURI(title );
-    
-    $("div.page-content div.wrapper div.home").load(url);
-    
-    
+    if (url=== "undefined"){ return;}
+    $.get(url, function(data){
+          //alert("Data Loaded: " + data);
+          $("div.page-content div.wrapper div.home").html(data);
+          $('pre.prettyprint').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                    });
+          $('pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                    });
+          });
 }
 
-function loadCategories(category){
+var QueryString = function () {
     
-}
+    var query_string = {};
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+        var pair = vars[i].split("=");
+        // If first entry with this name
+        if (typeof query_string[pair[0]] === "undefined") {
+            query_string[pair[0]] = decodeURIComponent(pair[1]);
+            // If second entry with this name
+        } else if (typeof query_string[pair[0]] === "string") {
+            var arr = [ query_string[pair[0]],decodeURIComponent(pair[1]) ];
+            query_string[pair[0]] = arr;
+            // If third or later entry with this name
+        } else {
+            query_string[pair[0]].push(decodeURIComponent(pair[1]));
+        }
+    }
+    return query_string;
+}();
 
-/*var art = {"fileName":"MarkNote"};
-loadArticle(art);*/
+$(document).ready(function() {
+                  var page = QueryString.page;
+                  //alert(page);
+                  loadArticle(page);
+});
+
+
+
