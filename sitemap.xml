@@ -1,11 +1,2 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"> 
-  <url>
-    <loc>https://marknote.github.io/index.html</loc> 
-    https://marknote.github.io/category_%E5%BC%80%E5%8F%91%E9%9A%8F%E7%AC%94.html
-    https://marknote.github.io/category_%E5%BA%94%E7%94%A8.html
-    https://marknote.github.io/category_Apps.html
-    https://marknote.github.io/category_Open%20Source.html
-    https://marknote.github.io/index.html?page=About.html
-  </url>
-</urlset>
+<?xml version="1.0" encoding="UTF-8"?> 
+     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>index.html?page=iOS几行代码让界面变圆角.html</loc></url><url><loc>index.html?page=好代码.html</loc></url><url><loc>index.html?page=MarkDisk - 用iPhone当作web服务器.html</loc></url><url><loc>index.html?page=MarkNoteParser - 用Swift-Obj-c实现的markdown解析器.html</loc></url><url><loc>index.html?page=使用 UITextView来对markdown语法高亮.html</loc></url><url><loc>index.html?page=MarkNote 中文说明.html</loc></url><url><loc>index.html?page=MarkNoteView.html</loc></url><url><loc>index.html?page=MarkNote.html</loc></url><url><loc>index.html?page=MarkNotes 中文说明.html</loc></url><url><loc>index.html?page=MarkNote Parser.html</loc></url><url><loc>index.html?page=MarkNotes.html</loc></url><url><loc>index.html?page=Markdown Quickreference.html</loc></url></urlset>
