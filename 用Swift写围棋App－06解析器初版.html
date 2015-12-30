@@ -1,0 +1,121 @@
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+              
+              <header class="post-header">
+                  
+                  <p class="post-meta"><time datetime="28 Dec 2015" itemprop="datePublished">28 Dec 2015</time></p>
+              </header>
+              
+              <div class="post-content" itemprop="articleBody">
+                  <h1>用Swift写围棋App－06解析器初版</h1><p>tags: Apps, 开发随笔<br/></p>
+<p>了解了棋谱的格式后，我们终于可以撸代码了！<br/>我们来尝试一下TDD，也就是Test Driven Development,测试驱动开发。<br/>先定义相关的Model，开始的时候不用尽善尽美，满足最初的测试就好了。后面再不断改进好了。<br/>先定义一个类Location，它表示每一步棋放在那个位置：</p>
+<pre class="prettyprint lang-swift">
+
+class Location: NSObject {
+    var x:Int
+    var y:Int
+    init(x:Int,y:Int) {
+            self.x = x
+            self.y = y
+    }
+}</pre>
+<p>然后定义Move，它表示一步棋:</p>
+<pre class="prettyprint lang-swift">
+
+class Move: NSObject {
+    
+    var location: Location
+    var type:StoneType
+    
+    init(type:StoneType,loc:Location) {
+        self.location = loc
+        self.type = type
+    }
+
+}</pre>
+<p>这里StoneType用来区别黑棋和白棋，是一个枚举类型：</p>
+<pre class="prettyprint lang-swift">
+
+enum StoneType: Character {
+    case Black = "B"
+    case Withe = "W"
+}</pre>
+<p>定义一个<code>SGFParser</code>类，它就是我们的解析器了。先写一个假方法：</p>
+<pre class="prettyprint lang-Swift">
+
+public class SGFParser {
+    
+    func parse(kifu:String)-&gt;GameInfo{
+        return GameInfo()
+    }
+    
+}</pre>
+<p>然后写测试用例:</p>
+<pre class="prettyprint lang-swift">
+
+import XCTest
+@testable import GoTao
+
+class GoTaoTests: XCTestCase {
+    let parser = SGFParser()
+    func testKifuCount() {
+        let kifu = ";B[qd];W[dc];B[pq];"
+        let result = parser.parse(kifu)
+        assert(3==result.allMoves.count)
+        
+        
+    }
+ }</pre>
+<p>按command +U，运行测试。编译通过，但是测试失败:</p>
+<pre class="no-highlight">
+
+assertion failed: : file GoTaoTests.swift, line 26</pre>
+<p>这正是我们预期的！因为我的解析器还没写呢！<br/>改进一下解析器为如下版本：</p>
+<pre class="prettyprint lang-swift">
+
+import Foundation
+
+public class SGFParser {
+    
+    func parse(kifu:String)-&gt;GameInfo{
+        let game = GameInfo()
+        let moves = kifu.characters.split { $0 == ";" }
+            .map(String.init)
+            .filter{($0.hasPrefix("B[")||$0.hasPrefix("W["))&&$0.characters.count==5}
+            .map{Move(step: $0 as String)}
+        print(moves)
+        game.allMoves = moves
+        return game
+    }
+    
+}</pre>
+<p>这里我期望可以直接从<code>B[ab]</code>这样的字符串直接构建<code>Move</code>实例，所以需要改进一下<code>Move</code>这个类，如下：</p>
+<pre class="prettyprint lang-swift">
+
+import Foundation
+
+class Move: NSObject {
+    
+    var location: Location
+    var type:StoneType
+    
+    init(type:StoneType,loc:Location) {
+        self.location = loc
+        self.type = type
+    }
+    init(step:String){
+        let color =  StoneType(rawValue:step[step.startIndex])
+        let x = step.asciiValueAt(pos: 2) - "a".asciiValue
+        let y = step.asciiValueAt(pos: 3) - "a".asciiValue
+        
+        self.type = color!
+        self.location = Location(x: x,y: y)        
+    }
+
+}
+</pre>
+<p>再按command + U，奇迹出现了：<br/><img src="images/1451314290.957152.png" alt="comment" /><br/>居然通过了测试！<br/>虽然这只是最简单的一个版本，它却麻雀虽小，五脏俱全，已经具备了一个优秀应用的架子。<br/>很好！<br/>再次Commit和 Push代码到github https://github.com/marknote/GoTao<br/>下面就需要多写几个测试用例，来改进解析器了。</p>
+
+              </div>
+              
+</article>

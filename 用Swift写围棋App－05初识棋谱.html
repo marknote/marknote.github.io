@@ -1,0 +1,63 @@
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+              
+              <header class="post-header">
+                  
+                  <p class="post-meta"><time datetime="28 Dec 2015" itemprop="datePublished">28 Dec 2015</time></p>
+              </header>
+              
+              <div class="post-content" itemprop="articleBody">
+                  <h1>用Swift写围棋App－05初识棋谱</h1><p>tags: Apps, 开发随笔<br/></p>
+<p><img src="images/1451306357.350148.jpg" alt="comment" /><br/></p>
+<p>要做打谱软件，棋谱的解析自然是核心之一。<br/>围棋棋谱有不同的格式，主要有以下：<br/>SGF： Smart Game Format 的缩写，网上最流行的棋谱格式；<br/>MGT： 同SGF文件；<br/>BDX： 清风和弈城软件采用的棋谱文件；<br/>GOS： 联众围棋软件采用的棋谱文件；<br/>GIB： 棋圣道场围棋软件采用的棋谱文件；<br/>NGF： 新浪围棋软件采用的棋谱文件，也是韩国一种较通用的棋谱档；<br/>UGF： 一种日本围棋软件采用的棋谱文件，也是日本一种较通用棋谱档；<br/>GO ： ISHI采用的棋谱档；<br/>MAN： 猜局软件采用的棋谱文件；<br/>GOA： 围棋助手专用的二进制棋谱文件格式，支持SGF文件的所有属性，占用空间更小，并且会不断扩充更多的属性；<br/>IGO： 围棋助手专用的棋谱索引文件，能为软件所支持的棋谱文件建立索引；<br/>WGS: QQ围棋游戏棋谱<br/>SDB： Stone Base 棋谱<br/></p>
+<p>其中SGF格式是网上最流行的格式。其实是一个文本文件。<br/>SGF文件格式由Anders Kierulf在1987年制定。在<a href="http://www.red-bean.com/sgf/user_guide/index.html">red-bean.com</a>上有一个这个文件格式的完整说明。<br/></p>
+<p>让我们先看一个SGF棋谱的例子：<br/></p>
+<pre class="no-highlight">
+
+
+(;SZ[19]FF[3]
+EV[御城棋]
+PB[本因坊秀策]
+BR[六段]
+PW[林柏荣门人]
+WR[七段]
+DT[1851-11-17]
+PC[江户御城，日本]
+RE[共241手，黑胜7目]
+KM[0]
+SO[]
+
+;B[qd];W[dc];B[pq];W[qo];B[oc];W[qj];B[eq];W[do];B[cp];W[co]
+;B[bp];W[np];B[po];W[pp];B[op];W[qp];B[oq];W[oo];B[no];W[pn]
+;B[on];W[qq];B[po];W[pm];B[mp];W[ck];B[ce];W[cg];B[cc];W[cb]
+;B[dd];W[ec];B[bc];W[bb];B[ef];W[gc];B[eh];W[fg];B[ch];W[bh]
+;B[dh];W[bi];B[lc];W[kq];B[kp];W[jp];B[ko];W[bo];B[gq];W[fp]
+;B[ep];W[fq];B[fr];W[eo];B[fo];W[gp];B[hp];W[go];B[ho];W[gn]
+;B[hr];W[hn];B[in];W[im];B[jm];W[jn];B[io];W[ee];B[bg];W[bf]
+;B[cf];W[ag];B[ff];W[gf];B[fe];W[ed];B[ge];W[dg];B[eg];W[df]
+;B[il];W[hm];B[hl];W[fm];B[fk];W[qf];B[mk];W[of];B[oj];W[rd]
+;B[rc];W[pd];B[qc];W[od];B[pc];W[fi];B[ej];W[hj];B[jk];W[hf]
+;B[de];W[bg];B[hc];W[hb];B[ic];W[ie];B[cj];W[bj];B[ib];W[md]
+;B[ke];W[jj];B[kj];W[ji];B[fh];W[ki];B[lj];W[le];B[je];W[kg]
+;B[mc];W[nl];B[ml];W[dp];B[dq];W[cq];B[cr];W[bq];B[br];W[ap]
+;B[lf];W[mi];B[pk];W[qk];B[pi];W[mf];B[ld];W[me];B[li];W[lh]
+;B[qi];W[qr];B[ql];W[om];B[rl];W[km];B[jl];W[mm];B[kn];W[ns]
+;B[nr];W[qm];B[rm];W[rn];B[pg];W[qe];B[lm];W[gb];B[kf];W[mg]
+;B[nh];W[ig];B[os];W[ln];B[kl];W[ps];B[or];W[oh];B[ni];W[jf]
+;B[id];W[he];B[dk];W[ci];B[gi];W[gj];B[hi];W[gh];B[hh];W[gg]
+;B[fj];W[ii];B[fl];W[dl];B[pr];W[qs];B[mh];W[lg];B[rh];W[pl]
+;B[rj];W[ia];B[ja];W[ha];B[jb];W[mn];B[el];W[dm];B[re];W[rf]
+;B[sd];W[oo];B[nn];W[mo];B[nq];W[nm];B[np];W[og];B[em];W[en]
+;B[ar];W[nk];B[nj];W[dj];B[pf];W[pe];B[nd];W[ne];B[nc];W[sf]
+;B[qg];W[se];B[rd];W[sh];B[si];W[sg];B[ph];W[sm];B[rk];W[ih]
+;B[ei];W[lo];B[lp];W[fd];B[sl];W[sn];B[ok];W[po];B[ek];W[di]
+;B[ng])
+</pre>
+<p>这个文件基本上可以分为2个部分：<br/>-前面一部分是记录的棋局的基本信息：<br/>比如<code>PB[本因坊秀策]BR[六段]PW[林柏荣门人]WR[七段]</code>，说的是执黑的是本因坊秀策(六段)，执白的是林柏荣门人(七段)-后面一部分都由;<code>B[xy];W[xy]</code>之类的形式组成，就是下的每一步棋的记录了。比如第一手棋，<code>;B[qd]</code>  即为，黑棋，下在了<code>qd</code>这个位置。</p>
+<p>在SGF文件中，节点node是最基本的概念。每个节点包含一些属性，属性携带信息，比如BReferenceUsageInfo 则放的是注释。<br/></p>
+<table><tr><th>节点名	</th><th> 属性 </th><th>	解释</th></tr><tr><td>黑方/白方人名 </td><td>	PBReferenceUsageInfo </td><td>	黑方/白方人名</td></tr><tr><td>黑方／白方棋力 </td><td>	BRReferenceUsageInfo	</td><td> 黑白玩家的棋力等级</td></tr><tr><td>结果</td><td>	RE]</td><td> 最终结果 B+score 表示黑方胜score目</td></tr><tr><td>让子Handicap </td><td>HA] </td><td>让子数</td></tr><tr><td>时间 </td><td>	TM] </td><td> 每一步棋的时间</td></tr><tr><td>日期 </td><td>	DT] </td><td>	下棋的日期</td></tr><tr><td>赛事Event </td><td>	EV] </td><td>赛事的名称</td></tr><tr><td>回合Round </td><td>	RO]	</td><td>回合数</td></tr><tr><td>地点 </td><td>	PC]	</td><td> 下棋地点</td></tr><tr><td>规则Rules	</td><td> RU] </td><td> 规则名，比如 Japanese, Chinese, AGA, GOE, 等等</td></tr></table><p>还有一些其他的节点名，我就不翻译了。直接放在这里。<br/></p>
+<table><tr><th>节点名	</th><th> 属性 </th><th>	解释</th></tr><tr><td>Game name </td><td>	GN] </td><td>	Name of the game</td></tr><tr><td>Opening </td><td>	ON] </td><td>	Describes the opening played (e.g. san-ren-sei)</td></tr><tr><td>Game comment </td><td>	GC]	</td><td> General comment about the game</td></tr><tr><td>Source </td><td>	SO] </td><td>	Name of the source (e.g. book, journal, etc.)</td></tr><tr><td>User</td><td>	US] </td><td>	Name of user (or program) who entered the game record</td></tr><tr><td>Annotation </td><td>	AN] </td><td>	Name of the person who made the annotations</td></tr><tr><td>Copyright</td><td>	CP] </td><td>	Any copyright information</td></tr></table><p>基本上了解了这些信息，你就可以读懂棋谱啦。</p>
+
+              </div>
+              
+</article>

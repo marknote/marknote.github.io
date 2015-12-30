@@ -1,0 +1,93 @@
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+              
+              <header class="post-header">
+                  
+                  <p class="post-meta"><time datetime="29 Dec 2015" itemprop="datePublished">29 Dec 2015</time></p>
+              </header>
+              
+              <div class="post-content" itemprop="articleBody">
+                  <h1>用Swift写围棋App－07解析器改进</h1><p>tags: Apps, 开发随笔<br/></p>
+<p>昨天解析器的第一个版本已经出来了，不过功能只能用一个词形容：<strong>简陋</strong>。<br/></p>
+<p>今天我们对它进行改进。既然是TDD，我们先写测试用例：</p>
+<pre class="prettyprint lang-swift">
+
+func testKifuMetaInfo() {
+        let kifu = "(;PB[本因坊秀策]\nBR[六段]\nPW[林柏荣门人]\nWR[七段]\nPC[江户御城，日本]\nRE[共241手，黑胜7目]\nDT[1851-11-17]"
+        let game = parser.parse(kifu)
+        assert(game.playerBlack == "本因坊秀策" )
+        assert(game.playerWhite == "林柏荣门人" )
+        assert(game.rankBlack == "六段" )
+        assert(game.rankWhite == "七段" )
+        assert(game.result == "共241手，黑胜7目" )
+        assert(game.date == "1851-11-17")
+        
+    }
+</pre>
+<p>运行它，当然会出问题，然后改进一下代码，让测试通过。<br/>改进一下<code>GameInfo</code>:</p>
+<pre class="prettyprint lang-swift">
+
+import Foundation
+
+class GameInfo: NSObject {
+    
+    var title: String = ""
+    var metaInfo: String = ""
+    
+    var playerWhite: String = ""
+    var playerBlack: String = ""
+    var rankWhite: String = ""
+    var rankBlack: String = ""
+    var result: String = ""
+    var date:String = ""
+    
+    var allMoves: [Move] = [Move]()
+}
+</pre>
+<p>改进一下SGFParser:</p>
+<pre class="prettyprint lang-swift">
+
+public class SGFParser {
+    
+    func parse(kifu:String)-&gt;GameInfo{
+        let game = GameInfo()
+        let nodes = kifu.characters.split { $0 == ";" }
+            .map(String.init)
+        
+        if nodes.count &gt;= 2 {
+            let metaNode = nodes[1]
+            if let pb = metaNode.findValueWithTags("PB[", endTag: "]"){
+                game.playerBlack = pb
+            }
+            if let pw = metaNode.findValueWithTags("PW[", endTag: "]"){
+                game.playerWhite = pw
+            }
+            
+            if let br = metaNode.findValueWithTags("BR[", endTag: "]"){
+                game.rankBlack = br
+            }
+            if let wr = metaNode.findValueWithTags("WR[", endTag: "]"){
+                game.rankWhite = wr
+            }
+            if let re = metaNode.findValueWithTags("RE[", endTag: "]"){
+                game.result = re
+            }
+            if let dt = metaNode.findValueWithTags("DT[", endTag: "]"){
+                game.date = dt
+            }
+        }
+        
+        let moves = nodes
+            .filter{($0.hasPrefix("B[")||$0.hasPrefix("W["))&&$0.characters.count==5}
+            .map{Move(step: $0 as String)}
+        //print(moves)
+        game.allMoves = moves
+        return game
+    }
+    
+}</pre>
+<p>经过改进，解析器通过了测试用例，这意味着它已经基本可以解析棋谱。<br/>这是一个伟大的胜利。<br/>很好，可以收工。<br/>代码Push到github https://github.com/marknote/GoTao<br/>下一步，就需要把每一步棋，绘制到棋盘上了。</p>
+
+              </div>
+              
+</article>

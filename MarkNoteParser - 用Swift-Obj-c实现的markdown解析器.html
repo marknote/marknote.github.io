@@ -7,7 +7,7 @@
               </header>
               
               <div class="post-content" itemprop="articleBody">
-                  <h1>MarkNoteParser - 用Swift/Obj-c实现的markdown解析器</h1><p>categories:开发随笔<br/></p>
+                  <h1>MarkNoteParser - 用Swift/Obj-c实现的markdown解析器</h1><p>tags:开发随笔<br/></p>
 <p>我用Obj-c和Swfit实现了一个简单的markdown解析器，源代码放在github上了。<br/>Objective-C 版本:    https://github.com/marknote/MarkNoteParserObjC<br/>Swift 版本: https://github.com/marknote/MarknoteParser<br/></p>
 <h2>缘由</h2><p>我有一个小应用 <a href="https://itunes.apple.com/cn/app/marknote/id991297585?ls=1&mt=8">MarkNote</a> ，这是一个使用markdown语法来记笔记的小工具。<br/>最开始的时候, 我使用 <a href="https://github.com/chjj/marked">marked</a> 来把 markdown 渲染为HTML。marked使用起来简单。不过，一个native的应用居然用基于javascript的引擎来做解析，心里总觉得有点不爽 :)<br/>找了找没找到合适的<br/>基于Swfit/Object-c实现的 markdown解析起 , 我决定自己轮子一个。于是就有了这个项目。<br/>一开始我只是实现了Swfit版本，后来xcode升级到7.0之后，swift的应用文件生成很大，很多时候都大于40m（当然，app store最后会优化，尺寸大大减少）。于是觉得obj-c也很有必要，就又一口气撸了一个 obj-c版本的。<br/></p>
 <h2>使用方法</h2><h3>swift 版本</h3><ul>

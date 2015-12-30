@@ -1,0 +1,79 @@
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+              
+              <header class="post-header">
+                  
+                  <p class="post-meta"><time datetime="27 Dec 2015" itemprop="datePublished">27 Dec 2015</time></p>
+              </header>
+              
+              <div class="post-content" itemprop="articleBody">
+                  <h1>用Swift写围棋App－03搭架子</h1><p>tags: Apps, 开发随笔<br/>基本上，我的构思是这样的：<br/>A: 应用启动后，进入一个棋谱列表，可以看到一些可用的棋谱；<br/>B: 每一个棋谱，会有一个标题，比如“第一届日本最强者决定战吴清源对高川格”，还有一些小字说明额外的信息，比如“对弈时间：1957年2月20日”；<br/>C: 用户选中一行后，应用会加载相应的棋谱；<br/></p>
+<p>从这个设想来看，一个典型的UINavigatioController + UITableView似乎可以构成主要的UI。<br/></p>
+<p>打开Main.stroyboard，选中之前Xcode自动创建的那个ViewController，在菜单中找到Editor->Embed In -> Navigation Controller。<br/></p>
+<p>在这个ViewController上拖一个UITableView;<br/>再在StoryBorad中加入一个新的UIViewController;<br/>在 UITableView中选中ContentView，按住control + command键，拖到新的ViewController上，建一个<code>Show</code>的Segue。</p>
+<p>将XCode创建的ViewController改名叫HomeViewController，就是步骤A的界面了。<br/>然后新建一个UIViewController的子类，命名为GameViewController，就是用来在步骤C中加载棋谱的了。<br/></p>
+<p>现在的Stroyboard是这个样子的：<br/></p>
+<p><img src="images/1451211567.142231.png" alt="comment" /><br/></p>
+<p>运行一下，执行成功，界面是空的。<br/>接下来，让我们弄点测试数据，让界面丰满起来。<br/></p>
+<p>建一个新的Swift类，命名为GameInfo，代码如下：<br/></p>
+<pre class="no-highlight">
+
+import Foundation
+
+class GameInfo: NSObject {
+    
+    var title: String = ""
+    var metaInfo: String = ""
+}</pre>
+<p>然后在HomeViewController中敲入如下代码：<br/></p>
+<pre class="no-highlight">
+
+import UIKit
+
+ public class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    var _games:[GameInfo] = [GameInfo]()
+    @IBOutlet weak var _tblGames:UITableView!
+    
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let game1 = GameInfo()
+        game1.title = "第一届日本最强者决定战吴清源对高川格"
+        game1.metaInfo = "对弈时间：1957年2月20日"
+        _games.append(game1)
+
+	let game2 = GameInfo()
+        game2.title = "MarkNote对弈李昌镐"
+        game2.metaInfo = "对弈时间：2015年12月28日"
+        _games.append(game2)
+
+        
+        _tblGames.delegate = self
+        _tblGames.dataSource = self
+        
+        
+        
+    }
+    
+    @objc public func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int {
+        return _games.count
+    }
+    
+    @objc public func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -&gt; UITableViewCell {
+        let row = indexPath.row
+        let game = _games[row]
+        
+        let cell = _tblGames.dequeueReusableCellWithIdentifier("GameCell", forIndexPath: indexPath)
+        cell.textLabel?.text = game.title
+        cell.detailTextLabel?.text = game.metaInfo
+        return cell
+        
+    }
+}</pre>
+<p>注意，这里因为UITableViewDataSource, UITableViewDelegate是Objective-c中定义的，所以这个HomeViewController必须声明为public的。否则一堆错误。<br/>修改完毕，运行是这个样子的：<br/><img src="images/1451214592.223099.png" alt="comment" /><br/></p>
+<p>看起来很好，将代码push到 github上<br/>https://github.com/marknote/GoTao</p>
+
+              </div>
+              
+</article>

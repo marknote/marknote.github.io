@@ -1,0 +1,180 @@
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+              
+              <header class="post-header">
+                  
+                  <p class="post-meta"><time datetime="1 Jan 1970" itemprop="datePublished">1 Jan 1970</time></p>
+              </header>
+              
+              <div class="post-content" itemprop="articleBody">
+                  <h1>Markdown Quick Reference</h1><p>Tags: Help<br/></p>
+<span style='color:red;'>Don't modify this note. Your changes will be overrided.</span><h5>Table of Contents</h5><p><a href="#headers">Headers</a><br/><a href="#emphasis">Emphasis</a><br/><a href="#lists">Lists</a><br/><a href="#links">Links</a><br/><a href="#images">Images</a><br/><a href="#code">Code and Syntax Highlighting</a><br/><a href="#tables">Tables</a><br/><a href="#blockquotes">Blockquotes</a><br/><a href="#html">Inline HTML</a><br/></p>
+<a name="headers"/><h2>Headers</h2><pre class="prettyprint lang-markdown">
+
+# H1
+## H2
+### H3
+#### H4
+##### H5
+###### H6
+Alternatively, for H1 and H2, an underline-ish style:
+Alt-H1
+======
+Alt-H2
+------</pre>
+<h1>H1</h1><h2>H2</h2><h3>H3</h3><h4>H4</h4><h5>H5</h5><h6>H6</h6><p>Alternatively, for H1 and H2, an underline-ish style:<br/></p>
+<h1>Alt-H1</h1>
+<h2>Alt-H2</h2>
+<a name="emphasis"/><h2>Emphasis</h2><pre class="prettyprint lang-markdown">
+
+Emphasis, aka italics, with *asterisks* or _underscores_.
+Strong emphasis, aka bold, with **asterisks** or __underscores__.
+Strikethrough uses two tildes. ~~Scratch this.~~</pre>
+<p>Emphasis, aka italics, with <em>asterisks</em> or <em>underscores</em>.<br/>Strong emphasis, aka bold, with <strong>asterisks</strong> or <strong>underscores</strong>.<br/>Strikethrough uses two tildes. <del>Scratch this.</del><br/></p>
+<a name="lists"/><h2>Lists</h2><p>(In this example, leading and trailing spaces are shown with with dots: ⋅)<br/></p>
+<pre class="prettyprint lang-markdown">
+
+1. First ordered list item
+2. Another item
+⋅⋅* Unordered sub-list.
+1. Actual numbers don't matter, just that it's a number
+⋅⋅1. Ordered sub-list
+4. And another item.
+
+⋅⋅⋅You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).
+
+⋅⋅⋅To have a line break without a paragraph, you will need to use two trailing spaces.⋅⋅
+⋅⋅⋅Note that this line is separate, but within the same paragraph.⋅⋅
+⋅⋅⋅(This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
+
+* Unordered list can use asterisks
+- Or minuses
++ Or pluses</pre>
+<p>1. First ordered list item<br/>2. Another item<br/><ul>
+<li>Unordered sub-list.</li>
+</ul>
+1. Actual numbers don't matter, just that it's a number<br/>⋅⋅1. Ordered sub-list<br/>4. And another item.<br/></ul>
+</p>
+<p>You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).<br/></p>
+<p>To have a line break without a paragraph, you will need to use two trailing spaces.<br/>Note that this line is separate, but within the same paragraph.<br/>(This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)<br/></p>
+<ul>
+<li><p>Unordered list can use asterisks</li>
+<li>Or minuses</li>
+<li>Or pluses</li>
+</ul>
+</p>
+<a name="links"/></ul>
+<h2>Links</h2><p>There are two ways to create links.<br/></p>
+<pre class="prettyprint lang-no-highlight">
+
+[I'm an inline-style link](https://www.google.com)
+[I'm an inline-style link with title](https://www.google.com "Google's Homepage")
+[I'm a reference-style link][Arbitrary case-insensitive reference text]
+[I'm a relative reference to a repository file](../blob/master/LICENSE)
+[You can use numbers for reference-style link definitions][1]
+Or leave it empty and use the [link text itself]
+Some text to show that the reference links can follow later.
+[arbitrary case-insensitive reference text]: https://www.mozilla.org
+[1]: http://slashdot.org
+[link text itself]: http://www.reddit.com</pre>
+<p><a href="https://www.google.com">I'm an inline-style link</a><br/><a href="https://www.google.com" title="Google's">I'm an inline-style link with title</a><br/><a href="https://www.mozilla.org">I'm a reference-style link</a><br/><a href="../blob/master/license">I'm a relative reference to a repository file</a><br/><a href="http://slashdot.org">You can use numbers for reference-style link definitions</a><br/>Or leave it empty and use the link text itself]<br/>Some text to show that the reference links can follow later.<br/><br/><br/><br/></p>
+<a name="images"/><h2>Images</h2><pre class="prettyprint lang-no-highlight">
+
+Here's our logo (hover to see the title text):
+
+Inline-style:
+![alt text](https://shuminsun.github.io/images/40.png "Logo Title Text 1")
+
+Reference-style:
+![alt text][logo]
+
+[logo]: https://shuminsun.github.io/images/40.png "Logo Title Text 2"</pre>
+<p>Here's our logo (hover to see the title text):<br/></p>
+<p>Inline-style:<br/><img src="https://shuminsun.github.io/images/40.png "Logo Title Text 1"" alt="alt text" /><br/></p>
+<p>Reference-style:<br/><img src="https://shuminsun.github.io/images/40.png" alt="alt text" title="Logo"/><br/></p>
+<p><br/></p>
+<a name="code"/><h2>Code and Syntax Highlighting</h2><p>Code blocks are part of the Markdown spec, but syntax highlighting isn't. However, many renderers -- like Github's and <em>Markdown Here</em> -- support syntax highlighting. Which languages are supported and how those language names should be written will vary from renderer to renderer.<br/></p>
+<pre class="prettyprint lang-no-highlight">
+
+Inline `code` has `back-ticks around` it.</pre>
+<p>Inline <code>code</code> has <code>back-ticks around</code> it.</p>
+<p>Blocks of code are either fenced by lines with three back-ticks</p>
+<code>```</code><p>, or are indented with four spaces. I recommend only using the fenced code blocks -- they're easier and only they support syntax highlighting.<br/></p>
+<pre>```javascript
+    var s = "JavaScript syntax highlighting";
+    alert(s);
+    ```
+    
+    ```python
+    s = "Python syntax highlighting"
+    print s
+    ```
+    
+    ```
+    No language indicated, so no syntax highlighting.
+    ```
+</pre><pre class="prettyprint lang-javascript">
+
+var s = "JavaScript syntax highlighting";
+alert(s);</pre>
+<pre class="prettyprint lang-python">
+
+s = "Python syntax highlighting"
+print s</pre>
+<pre class="no-highlight">
+
+No language indicated, so no syntax highlighting.</pre>
+<a name="tables"/><h2>Tables</h2><p>Tables aren't part of the core Markdown spec, but they are part of GFM and <em>Markdown Here</em> supports them. They are an easy way of adding tables to your email -- a task that would otherwise require copy-pasting from another application.<br/></p>
+<pre class="prettyprint lang-no-highlight">
+
+Colons can be used to align columns.
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
+The outer pipes (|) are optional, and you don't need to make the raw Markdown line up prettily. You can also use inline Markdown.
+
+Markdown | Less | Pretty
+--- | --- | ---
+*Still* | `renders` | **nicely**
+1 | 2 | 3</pre>
+<p>Colons can be used to align columns.<br/></p>
+<table><tr><th> Tables        </th><th> Are           </th><th style="text-align: center;"> Cool </th></tr><tr><td> col 3 is      </td><td> right-aligned </td><td style="text-align: center;"> $1600 </td></tr><tr><td> col 2 is      </td><td> centered      </td><td style="text-align: center;">   $12 </td></tr><tr><td> zebra stripes </td><td> are neat      </td><td style="text-align: center;">    $1 </td></tr></table><p>The outer pipes (|) are optional, and you don't need to make the raw Markdown line up prettily. You can also use inline Markdown.<br/></p>
+<table><tr><th>Markdown </th><th> Less </th><th> Pretty</th></tr><tr><td><em>Still</em> </td><td> <code>renders</code> </td><td> <strong>nicely</strong></td></tr><tr><td>1 </td><td> 2 </td><td> 3</td></tr></table><a name="blockquotes"/><h2>Blockquotes</h2><pre class="prettyprint lang-no-highlight">
+
+&gt; Blockquotes are very handy in email to emulate reply text.
+&gt; This line is part of the same quote.
+
+Quote break.
+
+&gt; This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can *put* **Markdown** into a blockquote.</pre>
+<blockquote><p>Blockquotes are very handy in email to emulate reply text.</blockquote><br/><blockquote>This line is part of the same quote.</blockquote><br/></p>
+<p>Quote break.<br/></p>
+<blockquote><p>This is a very long line that will still be quoted properly when it wraps. Oh boy let's keep writing to make sure this is long enough to actually wrap for everyone. Oh, you can <em>put</em> <strong>Markdown</strong> into a blockquote.</blockquote><br/></p>
+<a name="html"/><h2>Inline HTML</h2><p>You can also use raw HTML in your Markdown, and it'll mostly work pretty well.<br/></p>
+<pre class="no-highlight">
+
+&lt;dl&gt;
+    &lt;dt&gt;Definition list&lt;/dt&gt;
+    &lt;dd&gt;Is something people use sometimes.&lt;/dd&gt;
+    
+    &lt;dt&gt;Markdown in HTML&lt;/dt&gt;
+    &lt;dd&gt;Does *not* work **very** well. Use HTML &lt;em&gt;tags&lt;/em&gt;.&lt;/dd&gt;
+&lt;/dl&gt;</pre>
+<dl>
+    <dt><p>Definition list</p>
+</dt>
+    <dd><p>Is something people use sometimes.</p>
+</dd>
+    <dt><p>Markdown in HTML</p>
+</dt>
+    <dd><p>Does <em>not</em> work <strong>very</strong> well. Use HTML</p>
+<em>tags</em><p>.</p>
+</dd>
+</dl>
+              </div>
+              
+</article>
