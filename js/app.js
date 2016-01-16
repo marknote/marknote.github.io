@@ -40,7 +40,9 @@ var QueryString = function () {
 $(document).ready(function() {
                   var page = QueryString.page;
                   //alert(page);
-                  loadArticle(page);
+                  if(window.location.pathname.indexOf("index.html")>=0 || window.location.pathname === "/"){
+                  	loadArticle(page);
+                  }
 });
 
 
