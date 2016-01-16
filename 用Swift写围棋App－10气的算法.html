@@ -7,7 +7,7 @@
               </header>
               
               <div class="post-content" itemprop="articleBody">
-                  <h1>用Swift写围棋App－10气的算法</h1><p>tags: Apps, 开发随笔<br/></p>
+                  <h1>用Swift写围棋App－10气的算法</h1><p>tags: 应用, 开发随笔<br/></p>
 <p>在上一片分片完成之后，计算每一组棋的棋就是水到渠成的事了。<br/>我们还是从最基本的概念入手。一个棋子在棋盘上，与它直线紧邻的空点是这个棋子的“气”。<br/>如下图，一个不在边框上的棋，其周围有4个相邻的空点，即ABCD四个位置。<br/><img src="images/1452089061.709817.jpg" alt="comment" /><br/>将这个情形写成测试用例用swift描述就是：</p>
 <pre class="prettyprint lang-swift">
 
