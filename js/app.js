@@ -1,6 +1,8 @@
 function loadArticle(title){
     var url = encodeURI(title );
-    if (url=== "undefined"){ return;}
+    if (url=== "undefined"){ 
+    	url = "default.html";
+    }
     $.get(url, function(data){
           //alert("Data Loaded: " + data);
           $("div.page-content div.wrapper div.home").html(data);
