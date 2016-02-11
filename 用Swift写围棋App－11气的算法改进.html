@@ -1,0 +1,152 @@
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+              
+              <header class="post-header">
+                  
+                  <p class="post-meta"><time datetime="11 Feb 2016" itemprop="datePublished">11 Feb 2016</time></p>
+              </header>
+              
+              <div class="post-content" itemprop="articleBody">
+                  <h1>用Swift写围棋App－11气的算法改进</h1><p>tags: 应用, 开发随笔<br/></p>
+<p>上次写完气的算法后，以为快接近尾声了。在使用中却发现有一些问题：<br/><ul>
+<li>如果在下棋过程中，如果曾经有多手下在同一个位置，则计算不正确；</li>
+<li>在回退时，被&quot;提&quot;的棋子显示不正常；</li>
+<li>在“打劫”的时候程序处理不正确；</li>
+</ul>
+对这个问题反复思考，我发现根本原因是计算过程中忽略了棋子的先后顺序，分组和算气的时候只是考虑了棋子的位置，而没有考虑落子先后。我这才明白: <strong>围棋的过程是时间相关的</strong>，棋子的<strong>先后</strong>有着重要的作用。<br/>具体说来有以下规则：<br/><ul>
+<li>每一步棋只是在当前的形势下起作用; 而且只会影响对方的某一片棋的生死; (棋谱中不存在一手棋让自己没气的情形)</li>
+<li>历史上已经死了棋不会复生; 它们也不会对分组或者任何一片棋起作用；</li>
+</ul>
+想清楚了这个问题，改进算法就不难了。<br/>首先，我们需要在 Model也就是Move中记录落子的先后:</ul>
+</ul>
+</p>
+<pre class="prettyprint lang-swift">
+
+class Move: NSObject {
+    ...
+    var handNumber = 0 //the order of move
+    var handOfDead = -1 // in which step the move is caculated to be dead
+  ...</pre>
+<p>然后，当前这一步只需要考虑对前一步结果的影响。因此，成了一个递归问题。其最初状态是第一手棋，围棋中第一手肯定是黑棋，它不管落在何处，这个棋自己就成了一个组，而且也是第一手那个状态时的唯一一个组:</p>
+<pre class="prettyprint lang-swif">
+
+       // the very beginning
+        if hand == 0 {
+            let group0 = MoveGroup()
+            group0.name = "B0"
+            group0.addMove(allMoves[0])
+            return [group0]
+        }</pre>
+<p>接下来，后面每一手依赖于前一手的结果:<br/>var groups = playToHand(hand - 1)<br/>当前手对分组的影响只会影响自己这一边已经存在的组：<br/><ul>
+<li>如果当前手和前面自己方的任何一组中的任何一个棋子相连，则当前手加入那一组;</li>
+<li>如果当前手和多个组相连，则这些组需要合并为一个新的组；</li>
+<li>如果当前手不和任何自己方的组相连，则需要建立一个新的组；</li>
+</ul>
+实现如下:<br/></ul>
+</p>
+<pre class="prettyprint lang-swift">
+
+let groupsWithSameColor = groups.filter({$0.name.hasPrefix(type)})
+        var handled = false
+        lastMove.groupName = ""
+        for g in groupsWithSameColor {
+            for move in g.allMoves {
+                if move.isConnectedTo(lastMove) {
+                    if lastMove.groupName == "" {
+                        handled = true
+                        g.addMove(lastMove)
+                    } else {
+                        // last move is already in a group, current group needs to be merged into that group
+                        let groupToConnect = groupsWithSameColor.filter({$0.name == lastMove.groupName}).first!
+                        g.mergeTo(groupToConnect)
+                    }
+                    break
+                }
+            }// end for move
+        }//end for g
+</pre>
+<p>分完组再计算每一个对方组的气，判断其死活:<br/></p>
+<pre class="prettyprint lang-swift">
+
+ // filter out empty groups
+        let liveGroups = groups.filter({$0.allMoves.count &gt; 0 })
+        let allOccupied = occupiedLocations(allMoves.filter({$0.handNumber &lt;= hand &&  $0.handOfDead == -1}))
+        // only need to check opposite party
+        let oppositeGroups = liveGroups.filter({!$0.name.hasPrefix(type)})
+        for grp in oppositeGroups{
+            let liberty = grp.calculateLiberty(allOccupied)
+            if liberty == 0 {
+                for move in grp.allMoves {
+                    move.isDead = true
+                    move.handOfDead = hand
+                }
+                grp.isDead = true
+            }
+        }</pre>
+<p>写起来一气呵成。完整的算法实现:</p>
+<pre class="prettyprint lang-swift">
+
+ func playToHand(hand:Int)-&gt; [MoveGroup]{
+        // the very beginning
+        if hand == 0 {
+            let group0 = MoveGroup()
+            group0.name = "B0"
+            group0.addMove(allMoves[0])
+            return [group0]
+        }
+       
+        //the current step depends on the last status
+        var groups = playToHand(hand - 1)
+        let lastMove = allMoves[hand]
+        let type = String(lastMove.type.rawValue) //"B" or "W"
+        let groupsWithSameColor = groups.filter({$0.name.hasPrefix(type)})
+        var handled = false
+        lastMove.groupName = ""
+        for g in groupsWithSameColor {
+            for move in g.allMoves {
+                if move.isConnectedTo(lastMove) {
+                    if lastMove.groupName == "" {
+                        handled = true
+                        g.addMove(lastMove)
+                    } else {
+                        // last move is already in a group, current group needs to be merged into that group
+                        let groupToConnect = groupsWithSameColor.filter({$0.name == lastMove.groupName}).first!
+                        g.mergeTo(groupToConnect)
+                    }
+                    break
+                }
+            }// end for move
+        }//end for g
+        
+        if !handled {
+            let groupNew = MoveGroup()
+            groupNew.name = "\(lastMove.type.rawValue)\(lastMove.handNumber)"
+            groupNew.addMove(lastMove)
+            groups.append(groupNew)
+        }
+        // filter out empty groups
+        let liveGroups = groups.filter({$0.allMoves.count &gt; 0 })
+        let allOccupied = occupiedLocations(allMoves.filter({$0.handNumber &lt;= hand &&  $0.handOfDead == -1}))
+        // only need to check opposite party
+        let oppositeGroups = liveGroups.filter({!$0.name.hasPrefix(type)})
+        for grp in oppositeGroups{
+            let liberty = grp.calculateLiberty(allOccupied)
+            if liberty == 0 {
+                for move in grp.allMoves {
+                    move.isDead = true
+                    move.handOfDead = hand
+                }
+                grp.isDead = true
+            }
+        }
+
+        
+        return liveGroups.filter({!$0.isDead })
+        
+    }
+</pre>
+<p>效果如下：<br/><img src="images/1455155993.702481.png" alt="comment" /><br/>最新的代码已经放到github:https://github.com/marknote/GoTao<br/>玩起来挺有趣的，下到200手左右有惊喜 :)</p>
+
+              </div>
+              
+</article>

@@ -59,7 +59,7 @@ func calculateLiberty(occupied:[Location])-&gt;Int{
         }
         for l in occupied {
             if self.location.isEqual(l) {
-               continue 
+21``2               continue 
             }
             if self.location.isConnectedTo(l) {
                 liberty -= 1

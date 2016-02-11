@@ -1,6 +1,5 @@
-/*components */
 .site-header {
-    border-top: 5px solid #c52d2f;
+    border-top: 5px solid #8BC34A;
     border-bottom: 0;
     min-height: 56px;
     position: relative;
@@ -22,48 +21,14 @@ background-color:#020202;
 color:#dddddd;
 
 }
-.card{
-width:600px; 
-height:400px;
-/*background-color:#020202;*/
-position: relative;
-}
 
-.card div.info{
-	color:white;
-	position: relative;
-    top: 200px;
-    right:40px;
-    background-color: rgba(0,0,0,0.4);
-   
-}
-.info h1, .info h3{
-	color:white;
-	text-align: right;
-	border-bottom: 0;
-}
-#card-marknotes{
-	background-image:url("../images/MarkNotes.jpg");
-	background-size:100% 100%;
-}
-#card-markphoto{
-	background-image:url("../images/MarkPhoto.jpg");
-	background-size:100% 100%;
-}
-#card-markdisk{
-	background-image:url("../images/MarkDisk.jpg");
-	background-size:100% 100%;
-}
 
-/*.jcarousel{width:600px; height:400px;}*/
-
-/*jcarousel */
 .jcarousel-wrapper {
     margin: 20px auto;
     position: relative;
-    /*border: 10px solid #fff;
+    border: 10px solid #fff;
     width: 600px;
-    height: 400px;*/
+    height: 400px;
     -webkit-border-radius: 5px;
        -moz-border-radius: 5px;
             border-radius: 5px;
@@ -104,7 +69,6 @@ position: relative;
 
 .jcarousel li {
     float: left;
-    list-style: none;
 }
 
 /** Carousel Controls **/
@@ -116,8 +80,7 @@ position: relative;
     width: 30px;
     height: 30px;
     text-align: center;
-   
-    background-color: #c52d2f;
+    background: #4E443C;
     color: #fff;
     text-decoration: none;
     text-shadow: 0 0 1px #000;
@@ -131,11 +94,11 @@ position: relative;
 }
 
 .jcarousel-control-prev {
-    left: 2px;
+    left: -50px;
 }
 
 .jcarousel-control-next {
-    right: 2px;
+    right: -50px;
 }
 
 .jcarousel-control-prev:hover span,
@@ -177,12 +140,11 @@ position: relative;
 }
 
 .jcarousel-pagination a.active {
-    background: #c52d2f;
+    background: #4E443C;
     color: #fff;
     opacity: 1;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75);
 }
-
 
 
 
