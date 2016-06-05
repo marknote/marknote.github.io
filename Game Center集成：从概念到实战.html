@@ -1,0 +1,130 @@
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+              
+              <header class="post-header">
+                  
+                  <p class="post-meta"><time datetime="26 Mar 2016" itemprop="datePublished">26 Mar 2016</time></p>
+              </header>
+              
+              <div class="post-content" itemprop="articleBody">
+                  <h1>Game Center集成：从概念到实战</h1><p>tags:开发随笔<br/></p>
+<h1>Game Center概述</h1><p><img src="images/1459039479.498121.png" alt="comment" /><br/>在App Store中，最流行的应用类型非游戏莫属。几乎所有的iOS用户都下载并玩过游戏。有各种样的游戏玩家，有人为之痴狂，有人只是偶尔玩玩。不过无论是哪种玩家，都会注重游戏的趣味性。在游戏中能够实现目标，或者和其他玩家比赛，无疑是趣味性的一种重要实现手段。而在iOS中（和MacOS）中，伟大的苹果提供了Game Center，并提供了GameKit框架来让Game Center集成变得简单。<br/></p>
+<p>简单而言， Game Center提供了以下机制：<br/><ul>
+<li><strong>用户管理和验证</strong>。你的游戏不用再考虑用户注册，登录，密码找回，存储分数等繁琐的功能实现。Game Center为你的游戏提供了一个本地玩家（local player），这个对象为所有的游戏共享，你只需要调用即可；</li>
+<li><strong>排行榜</strong>。你只需要在 iTunesConnect中指定排行方式就可以轻松拥有一个或者多个排行榜;</li>
+<li><strong>记录成就</strong>。你的游戏需要定义里程碑，调用Game Center就可以保存进度；</li>
+<li><strong>挑战</strong>。Game Center提供了让玩家挑战其他玩家的机制。</li>
+</ul>
+</p>
+</ul>
+<h1>实战</h1><p>要让游戏支持Game Center，有三个步骤需要做：<br/><ul>
+<li>在iTunesConnect中配置；</li>
+<li>XCode工程配置；</li>
+<li>代码支持；</li>
+</ul>
+下面分开来讲。<br/>为了简单起见，我们假设:<br/><ul>
+<li>你的游戏功能已经基本开发完毕，本文只专注于Game Center集成这一部分；</li>
+<li>简单起见，本文没有涉及到玩家挑战等功能；</li>
+<li>开发用的编程语言为Swfit(如果用objective-C也类似)；</li>
+</ul>
+<h2>在iTunesConnect中配置</h2>如果你还没有在iTunesConnect中添加应用记录的话，你需要添加一个。可以查看<a href="https://developer.apple.com/library/ios/documentation/languagesutilities/conceptual/itunesconnect_guide/chapters/creatingitunesconnectrecord.html">这里</a> 了解如何操作。<br/></ul>
+</ul>
+</p>
+<p>有了应用记录，你就可以配置Game Center了。<br/>登录iTunesConnect，在My Apps中选中你的应用，点击&quot;Features&quot;栏，在左边的导航中找到&quot;Game Center&quot;,如下图所示：<br/><img src="images/1459036406.349621.png" alt="comment" /><br/>在页面中找到&quot;Leaderboards (0) &quot;，0表示目前有0个排行榜。<br/><img src="images/1459036892.281486.png" alt="comment" /><br/>点击后面的&quot;+&quot;，出现下面的界面：<br/><img src="images/1459037063.927618.png" alt="comment" /><br/>这里让你选择是创建单一排行榜，还是合并的排行榜。我们选择单一排行榜(Single Leaderboard)<br/>然后需要填一些基本信息:<br/><ul>
+<li>&quot;Leaderboard Reference Name&quot;，排行榜名称；</li>
+<li>&quot;Leaderboard ID&quot;，排行榜ID，后面程序需要这个；</li>
+<li>Score Format Type,分数的格式，整数还是带小数点的分数；</li>
+</ul>
+</p>
+</ul>
+<p><img src="images/1459037291.468255.png" alt="comment" /><br/>填完基本信息后，我们需要添加至少一个排行榜的本地语言（Leaderboard Localization）：<br/><img src="images/1459037716.171048.png" alt="comment" /><br/></p>
+<h2>XCode工程配置</h2><p>在 xCode中，找到target，选中 “Capabilities”标签栏，找到Game Center，打开开关：<br/><img src="images/1459037852.872571.png" alt="comment" /><br/>XCode会将GameKit添加到你的工程。<br/><h2>代码支持</h2>有了 Game Center后，要写的代码不多。我们只需要用代码做以下几件事:<br/><ul>
+<li>游戏启动时验证用户；</li>
+<li>游戏过程中提交用户得分；</li>
+<li>显示排行榜;</li>
+</ul>
+简单起见，下面所有的代码都放在GameScene中。<br/>以下分开来说。<br/><h3>游戏启动时验证用户</h3>因为Game Center所有的操作都需要本地玩家(local player)，所以需要在启动时验证用户。<br/>验证用户的逻辑其实很简单。就是看用户是否已经在本机登录过，如果没有，则弹出Game Center的登录界面：</ul>
+</p>
+<pre class="prettyprint lang-swift">
+
+func authenticateLocalPlayer(){
+		
+		let localPlayer = GKLocalPlayer.localPlayer()
+		
+		localPlayer.authenticateHandler = {(viewController, error) -&gt; Void in
+			
+			if (viewController != nil) {
+				let vc: UIViewController = self.view!.window!.rootViewController!
+				vc.presentViewController(viewController!, animated: true, completion: nil)
+			}
+				
+			else {
+				print((GKLocalPlayer.localPlayer().authenticated))
+			}
+		}
+		
+	}</pre>
+<p>有了这段代码，只需要在<code>GameScene</code>的<code>didMoveToView</code>中调用一下上面这个方法就好了。</p>
+<h3>游戏过程中提交用户得分</h3><p>实现如下:</p>
+<pre class="prettyprint lang-swift">
+
+func reportScore(score:Int) {
+		//check if user is alredy logged in game center
+		if GKLocalPlayer.localPlayer().authenticated {
+			let scoreReporter = GKScore(leaderboardIdentifier: "grp.TopStrategist")
+			scoreReporter.value = Int64(score)
+			let scoreArray: [GKScore] = [scoreReporter]
+			GKScore.reportScores(scoreArray, withCompletionHandler: {(error : NSError?) -&gt; Void in
+				if error != nil {
+					print("error:%@", error)
+				}
+			})
+		}
+	}</pre>
+<h3>显示排行榜</h3><p>显示排行榜一般需要:<br/></p>
+<ul>
+<li><p>在用户点击显示排行榜时，暂停当前游戏；</li>
+<li>在用户退出排行榜后，继续当前游戏；</li>
+</ul>
+</p>
+</ul>
+<p>在界面上放一个按钮，当按钮响应时调用下面这个函数:<br/></p>
+<pre class="prettyprint lang-swift">
+
+	//shows leaderboard screen
+	func showLeader() {
+		
+		if stateMachine.currentState is GameSceneActiveState && !paused {
+			togglePause()
+		}
+		
+		let vc = self.view?.window?.rootViewController
+		let gc = GKGameCenterViewController()
+		gc.gameCenterDelegate = self
+		vc?.presentViewController(gc, animated: true, completion: nil)
+	}</pre>
+<p>上面的代码会弹出排行榜。<br/>要响应退出排行榜继续游戏，需要GameScene实现 <code>GKGameCenterControllerDelegate</code></p>
+<pre class="no-highlight">
+
+class GameScene: GKGameCenterControllerDelegate </pre>
+<p>这个GKGameCenterControllerDelegate只有一个方法需要我们实现：<br/></p>
+<pre class="prettyprint lang-swift">
+
+	func gameCenterViewControllerDidFinish(gameCenterViewController: GKGameCenterViewController)
+	{
+		gameCenterViewController.dismissViewControllerAnimated(true, completion: nil)
+		if stateMachine.currentState is GameSceneActiveState && paused {
+			togglePause()
+		}
+		
+	}</pre>
+<p>写到这里，Game Center的集成就完成了。用了 Game Cetner之后，是不是有让你的游戏如虎添翼的感觉？<br/>如果本文对你有用，不妨考虑对我打赏 :)<br/></p>
+<h1>参考资源</h1><ul>
+<li><p><a href="https://developer.apple.com/library/ios/documentation/networkinginternet/conceptual/gamekit_guide">苹果官方GameKit开发指南</a></li>
+<li><a href="https://developer.apple.com/library/ios/documentation/languagesutilities/conceptual/itunesconnectgamecenter_guide/introduction/introduction.html#//apple_ref/doc/uid/tp40013726-ch1-sw1">苹果官方 Game Center配置文档</a></li>
+</ul>
+</p>
+
+              </div>
+              
+</article>

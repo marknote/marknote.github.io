@@ -1,0 +1,67 @@
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+              
+              <header class="post-header">
+                  
+                  <p class="post-meta"><time datetime="17 Apr 2016" itemprop="datePublished">17 Apr 2016</time></p>
+              </header>
+              
+              <div class="post-content" itemprop="articleBody">
+                  <h1>你好Reactive Native</h1><p>tags:开发随笔<br/></p>
+<p>在移动开发领域，Reactive Native恐怕是目前最引人瞩目的项目之一。有很多理由让人不得不关注它，同时支持多个平台，性能接近于原生应用，采用javascript开发，大厂背书，各种理由，总有一个适合你。<br/></p>
+<p>虽然我目前专注于iOS开发，以Swift和Objective-C作为主要开发语言，但是还是忍不住开始了Reactive Native的尝试之旅。<br/></p>
+<p>毕竟世界总是在变。提前准备一下，说不定下一个项目就用它了 :)<br/></p>
+<h2>目标</h2><ul>
+<li><p>准备ReactNative开发环境</li>
+<li>运行起一个比较典型的开源Reactive Native应用。这里我选的是    <a href="https://github.com/isimar/hackernews-react-native">Hacker News</a></li>
+</ul>
+</p>
+</ul>
+<h2>环境</h2><p>环境准备参考https://facebook.github.io/react-native/docs/getting-started.html<br/></p>
+<p>我用的是MacBook，OSX 10.11。<br/>XCode 7.3已经安装。<br/></p>
+<h3>1. 安装或者更新homebrew</h3><p>官方推荐用homebrew来安装Watchman和Flow。<br/>我之前已经安装了homebrew。如果没有安装的话，可以参考https://coolestguidesontheplanet.com/installing-homebrew-on-os-x-el-capitan-10-11-package-manager-for-unix-apps/<br/></p>
+<h3>2. 安装nvm和node.js</h3><p>在Reactive Native开发过程中，大量使用node.js来实现一些自动处理的工作。所以node.js是必须的。<br/>Reactive Native需要node.js 4.0以上版本。<br/>Facebook推荐用nvm来安装和管理node.js。nvm 可以帮忙管理同一台机器里的多个node.js版本，并且可以在多个版本的node.js中间切换。<br/>可以运行下面的命令来安装nvm</p>
+<pre class="no-highlight">
+
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.0/install.sh | bash</pre>
+<p>运行完后nvm就安装好了。然后运行下面的命令来安装node.js 5.0:</p>
+<pre class="no-highlight">
+
+nvm install 5.0</pre>
+<p>完毕后nvm会自动将5.0版本设为默认，也可以执行下面的命令手动将5.0设为默认:</p>
+<pre class="no-highlight">
+
+nvm use 5.0</pre>
+<h3>3.安装Watchman和Flow</h3><pre class="no-highlight">
+
+brew install watchman</pre>
+<pre class="no-highlight">
+
+brew install flow</pre>
+<h3>4.安装ReactNative命令行</h3><p>执行</p>
+<pre class="no-highlight">
+
+sudo npm install -g react-native-cli</pre>
+<p>我在这里遇到一个错误，提示信息如下:<br/></p>
+<blockquote><p>ERROR EACCES, permission denied '/Users/admin/.babel.json' {&quot;errno&quot;:-13,&quot;code&quot;:&quot;EACCES&quot;,&quot;path&quot;:&quot;/Users/admin/.babel.json&quot;,&quot;syscall&quot;:&quot;open&quot;} Error: EACCES,</blockquote><br/></p>
+<p>这是文件权限设置的问题，改一下它的权限就好了:</p>
+<pre class="no-highlight">
+
+sudo chmod 777 ~/.babel.json</pre>
+<h3>5.下载并运行HackerNews</h3><p>可以直接在https://github.com/iSimar/HackerNews-React-Native页面中点“Download Zip”按钮。<br/>解压后到文件夹，将终端的当前路径cd到项目路径，然后</p>
+<pre class="no-highlight">
+
+npm install</pre>
+<p>node.js会下载这个工程所需要的模块。<br/>等命令执行完后，找到<code>ios</code>目录下的工程文件HN Reader.xcodeproj，点击就可以使用XCode打开了运行了。</p>
+<p>我在这里遇到一个小坑：运行后出现一个错误，信息为<br/></p>
+<blockquote><p>Failed to build DependencyGraph: Watchman error: Cannot read property 'root' of null.</blockquote><br/></p>
+<p>Google之后发现是Watchman版本过低造成的。解决方法</p>
+<pre class="no-highlight">
+
+$ brew update
+$ brew upgrade watchman</pre>
+<p>解决后HackNews终于可以运行了，贴一张图:<br/><img src="images/1460897211.732574.png" alt="comment" /></p>
+
+              </div>
+              
+</article>

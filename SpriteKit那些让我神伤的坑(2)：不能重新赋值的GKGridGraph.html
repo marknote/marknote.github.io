@@ -1,0 +1,55 @@
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+              
+              <header class="post-header">
+                  
+                  <p class="post-meta"><time datetime="20 Feb 2016" itemprop="datePublished">20 Feb 2016</time></p>
+              </header>
+              
+              <div class="post-content" itemprop="articleBody">
+                  <h1>SpriteKit那些让我神伤的坑(2)：不能重新赋值的GKGridGraph</h1><p>tags:开发随笔<br/>上次说到SpriteKit中有各种奇葩的东西。今天再讲一个，这次的主角是GKGridGraph。<br/>严格意义上讲，这个类并不属于SpriteKit，而是被包含在GameplayKit。不过SpriteKit开发经常需要用到GameplayKit，反正要吐槽，干脆就一起吐了吧。<br/>我做的游戏是一个塔防类游戏，需要计算路径。而GKGridGraph用来描述二维世界中的连接。<br/>在场景生成的时候，我需要创建GKGridGraph</p>
+<pre class="prettyprint lang-swift">
+
+graph = GKGridGraph(fromGridStartingAt: int2(0, 0), width: Int32(gridColumns), height: Int32(gridRows), diagonalsAllowed: false)</pre>
+<p>随后，加载地图中的障碍或者塔的时候，障碍或者塔所占的节点需要从GKGridGraph删除，只有这样敌人才可以找到正确的路径。删除节点的代码如下：</p>
+<pre class="prettyprint lang-swift">
+
+func removeGraphNodes (nodes: [GKGridGraphNode]){
+		graph.removeNodes(nodes)
+		for node in nodes {
+			removedNodes.append(node)
+		}
+	}</pre>
+<p>那么每一关，我需要重新构建这个graph。很自然，应该还是用上面的代码来构建：</p>
+<pre class="prettyprint lang-swift">
+
+graph = GKGridGraph(fromGridStartingAt: int2(0, 0), width: Int32(gridColumns), height: Int32(gridRows), diagonalsAllowed: false)</pre>
+<p>但是执行的时候，第一次创建没问题，再次创建的时候就会出现一个EXC<em>BAD</em>ACCESS的错误，然后程序就会奔溃。<br/></p>
+<p>我惊奇的发现，居然还有这样的事情：<strong>变量居然不能重新赋值</strong>！我惊奇的google了一下，发现这个奇葩的问题不少人都遇到了，比如:<br/>http://stackoverflow.com/questions/34165108/exc-bad-access-when-reasigning-gkgridgraph<br/>http://www.raywenderlich.com/forums/viewtopic.php?f=2&t=24412<br/></p>
+<p>有人说iOS SDK 9.2出这个问题，而9.0不会。<br/>我没有办法试，因为我不想折腾装9.0。看了一些别人的游戏，有些人和我不同，他们每一关都重新构建一个SKScene，所以也不存在我的这个问题。<br/></p>
+<p>在消耗掉几千个脑细胞后，我想到另外一种思路。既然不能将这个变量指向新的对象，那就干脆重用这个对象吧。我在每次删除的时候，将被删除的节点放入一个队列，然后在重新加载场景的时候将所有前面删除过的节点再加进来就是了。<br/>实现代码如下:</p>
+<pre class="prettyprint lang-swift">
+
+func initGraph(){
+     
+        if nil == graph {
+            graph = GKGridGraph(fromGridStartingAt: int2(0, 0), width: Int32(gridColumns), height: Int32(gridRows), diagonalsAllowed: false)
+        } else {
+            if removedNodes.count &gt; 0 {
+				
+				for node in removedNodes {
+					if false == graph.nodes?.contains(node){
+						graph.addNodes([node])
+						graph.connectNodeToAdjacentNodes(node)
+					}
+				}
+                removedNodes.removeAll()
+            }
+        }
+	}
+</pre>
+<p>经过验证，这个方法可以完美解决这个问题。<br/>如果你恰好也要用GKGridGraph，并且很幸运的看到了我的这篇文字，说不定可以节省你几千个脑细胞呢:)</p>
+
+              </div>
+              
+</article>

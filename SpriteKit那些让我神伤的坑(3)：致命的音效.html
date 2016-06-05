@@ -1,0 +1,68 @@
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+              
+              <header class="post-header">
+                  
+                  <p class="post-meta"><time datetime="27 Feb 2016" itemprop="datePublished">27 Feb 2016</time></p>
+              </header>
+              
+              <div class="post-content" itemprop="articleBody">
+                  <h1>SpriteKit那些让我神伤的坑(3)：致命的音效</h1><p>tags:开发随笔<br/></p>
+<h2>致命的音效</h2><p>音效是游戏的一个重要元素。SpriteKit对音效也提供了支持。<br/>在SpriteKit中有2种方式来播放音效：<br/>1. 使用SKAudioNode:</p>
+<pre class="prettyprint lang-swift">
+
+audioNode = SKAudioNode(fileNamed: filename)
+		audioNode!.autoplayLooped = false
+		self.addChild(audioNode!)
+		audioNode!.runAction(SKAction.play())</pre>
+<p>2.使用SKAction.playSoundFileNamed:</p>
+<pre class="prettyprint lang-swift">
+
+let soundAction = SKAction.playSoundFileNamed("\(towerType.rawValue)Fire.mp3", waitForCompletion: false)</pre>
+<p>这是Apple官方推荐的方法，几乎所有的SpriteKit教程也都是用的这2种方式。<br/>如果你像我一样，在游戏中有很多音效需要不断播放的话，你会面临两个问题：<br/>1.在多个音效一起播放的时候，你偶然会遇到一个uncaught exception</p>
+<pre class="no-highlight">
+
+*** Terminating app due to uncaught exception 'com.apple.coreaudio.avfaudio', reason: 'required condition is false: _engine-&gt;IsRunning()'</pre>
+<p>2.反复播放后你会发现内存只增不减。<br/>这两个问题都会造成应用崩溃。第一种是偶然性的崩溃，第二种是累积性的崩溃。<br/>所以我说，这是<strong>致命的音效</strong>。<br/></p>
+<p>观察到这个现象后，这个问题困扰我2个星期的时间。查了各种资料。<br/>有人用延迟了解决第一个问题。<br/>比如：<br/>https://forums.developer.apple.com/thread/27980<br/>但是效果并不完美。<br/><h2>解决方法</h2>经过探索我终于意识到，SpriteKit的音效播放本身存在问题。<br/>只有彻底放弃它才可以使问题得到解决。<br/>经过验证，以下2种方式都可以成功：<br/><h3>方法一：AudioServicesPlaySystemSound</h3></p>
+<pre class="prettyprint lang-swift">
+
+var dict = [String:SystemSoundID]()
+	
+	func play(fileName:String){
+		
+		if let soundId = dict[fileName] {
+			AudioServicesPlaySystemSound(soundId)
+		} else if let soundURL = NSBundle.mainBundle().URLForResource(fileName, withExtension: "mp3") {
+			var mySound: SystemSoundID = 0
+			AudioServicesCreateSystemSoundID(soundURL, &mySound)
+			dict[fileName] = mySound
+			AudioServicesPlaySystemSound(mySound)
+		}
+	}</pre>
+<h3>方法二：AVAudioPlayer</h3><pre class="prettyprint lang-swift">
+
+var dict2 = [String:AVAudioPlayer]()
+	
+	func play(fileName:String){
+		
+		if let player = dict2[fileName] {
+			player.play()
+		} else{
+			let path = NSBundle.mainBundle().pathForResource(fileName, ofType:"mp3")!
+			let url = NSURL(fileURLWithPath: path)
+			do {
+				let sound = try AVAudioPlayer(contentsOfURL: url)
+				//player = sound
+				dict2[fileName] = sound
+				sound.playAtTime(0)
+			} catch {
+				// couldn't load file :(
+			}
+		}
+	}</pre>
+<p>注意，由于我的游戏中，是几个声音文件（.mp3）反复播放，所以我将它们放在Dictionary中，避免每次都要加载。<br/>使用后，崩溃没了，内存的使用也终于正常了。</p>
+
+              </div>
+              
+</article>

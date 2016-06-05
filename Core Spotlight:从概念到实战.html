@@ -1,0 +1,117 @@
+
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+              
+              <header class="post-header">
+                  
+                  <p class="post-meta"><time datetime="24 Apr 2016" itemprop="datePublished">24 Apr 2016</time></p>
+              </header>
+              
+              <div class="post-content" itemprop="articleBody">
+                  <h1>Core Spotlight:从概念到实战</h1><p>tags:开发随笔<br/></p>
+<p>很早就知道iOS9有了新的Search API，不过一直都没有机会使用。今天刚好想在<a href="https://itunes.apple.com/app/markdisk-transfer-manage-your/id1035317905?mt=8">MarkDisk</a> 中加入搜索功能，于是快速看了一下，并且成功实施。最终的效果如下：<br/><img src="images/1461500867.454438.png" alt="comment" /><br/></p>
+<h1>概述</h1><h2>iOS 9 Search API概述</h2><p>iOS 9 提供了两种索引方式:<br/><ul>
+<li><strong>私有设备索引(private on-device index)</strong>。每一台iOS设备都有一个私有的索引，这个索引从来不与Apple或者在设备间共享。私有设备索引上条目只有用户可以搜到。此索引可以通过CSSearchableIndex defaultSearchableIndex]得到。</li>
+<li><strong>Apple的服务器端索引</strong>。服务器索引只存储网站上被恰当的标志过的数据。</li>
+</ul>
+</p>
+</ul>
+<p>iOS9的新Search API主要有以下三点：<br/></p>
+<ul>
+<li><p>在<code>NSUserActivity</code>类中提供了新的方法和属性来创建针对用户活动的索引项，这些活动包括如打开了导航点，或创建并查看内容等事件。</li>
+<li>Core Spotlight框架，供应用在私有设备索引上创建相关内容的索引，并实现指向应用内的深层链接。</li>
+<li>Web标记，让应用相关的网页内容变得可被搜索，从而丰富用户的搜索体验。</li>
+</ul>
+</p>
+</ul>
+<p>除了核心Search API， Apple还推荐使用下面三种技术和Search API一起使用，来提高用户搜索体验：<br/><ul>
+<li><strong>通用链接</strong>。iOS中9之后，使用基于标准的HTTP或HTTPS的通用链接，来取代自定义URL方案。通用链接可以支持所有用户，不管他们是否安装了应用(如果用户已经安装了应用，链接直接打开应用;如果他们没有安装应用，链接会用Safari打开你的网站)。这篇<a href="http://strivingboy.github.io/blog/2015/09/27/ios9/">博文</a>介绍了通用链接的概念。</li>
+<li><strong>智能应用横幅</strong>。当用户使用Safari浏览器访问你的网站的时候，智能应用横幅广告可以打开你的应用，或有机会让用户下载你的应用。</li>
+<li><strong>Handoff</strong>。Handoff可以让用户可以从一台设备到另一台设备继续工作。</li>
+</ul>
+</p>
+</ul>
+<h2>Core Spotlight 框架</h2><p>Core Spotlight框架用来索引应用内的内容。它创建的索引存储在设备上，不与Apple共享，也不能被其他应用或者设备访问。<br/>Apple的指南中特别提到Core Spotlight创建的索引最好在几千的数量级别之下。索引太多很有可能会带来性能问题。<br/></p>
+<p>索引的创建是通过两个类完成的：<br/></p>
+<ul>
+<li><p>CSSearchableItemAttributeSet：索引属性集合，也即是索引的内容本身。集合中可以存储以下属性：title, contentDescription, thumbnailData, rating, keywords.下面这张图显示了Spotlight是如何通过这些属性展示搜索结果的:</li>
+</ul>
+</p>
+</ul>
+<p><img src="images/1461492089.483870.png" alt="CSSearchableItemAttributeSet" /><br/></p>
+<ul>
+<li><p>CSSearchableItem：用来表示一个被索引的条目，通过来可以关联到应用内的记录。CSSearchableItem依赖于，它在构建的时候需要传入一个<code>CSSearchableItemAttributeSet</code>对象。</li>
+</ul>
+</p>
+</ul>
+<h1>实战</h1><h2>目标</h2><p><a href="https://itunes.apple.com/app/markdisk-transfer-manage-your/id1035317905?mt=8">MarkDisk</a> 是笔者开发的一款<strong>免费</strong>的iOS原生应用，它可以将iPhone变成一个运行HTTP服务的文件服务器，用户可以使用PC浏览器将文件(文档／图片／视频等)上传到iPhone中，并创建目录将文件管理起来。在<a href="http://marknote.github.io/index.html?page=markdisk%20-%20%e7%94%a8iphone%e5%bd%93%e4%bd%9cweb%e6%9c%8d%e5%8a%a1%e5%99%a8.html">这里</a>有一个简单的介绍。<br/></p>
+<p>这次增强的目标是：让用户可以在iOS中通过文件名中包含的词语搜索MarkDisk中存储的文件，并且可以打开并浏览对应的文件。<br/></p>
+<h2>分析</h2><p>问题的关键是针对文件信息的索引的创建和管理。可以将这个任务分解为以下几个子任务：<br/><ul>
+<li>给文件创建索引。</li>
+<li>在文件改变时更新索引。因为MarkDisk暂时不支持文件剪切，问题变得简单，只需要考虑文件删除的情形即可。</li>
+<li>响应链接的打开。</li>
+</ul>
+有两个问题需要注意：<br/><ul>
+<li><strong>ID问题</strong>。Spotlight需要给每一个<code>CSSearchableItem</code>设置一个唯一的ID。考虑到MarkDisk主要管理文件，我直接用文件的路径作为唯一ID，这样会更方便进行处理。考虑到每次应用升级时其绝对路径会改变，我采用文件相对于Documents目录的路径作为唯一ID。</li>
+<li><strong>索引的内容</strong>。如前所叙，Spotlight可以记录标题(title), 描述（contentDescription），缩略图(thumbnailData)， 等级(rating), 关键词（keywords），考虑到我只是想让用户搜索到应用内管理的文件，缩略图可以省掉（缺省情况下Spotlight会在搜索显示应用），标题可以直接用文件名，等级对我来说没有意义，关键词暂时也可以不用。</li>
+</ul>
+</ul>
+</p>
+</ul>
+<h2>代码实现</h2><h3>引用spotlight所需要头文件</h3><p>在需要的地方引用以下两个头文件</p>
+<pre class="prettyprint lang-c">
+
+ #import &lt;CoreSpotlight/CoreSpotlight.h&gt;
+ #import &lt;MobileCoreServices/MobileCoreServices.h&gt;</pre>
+<h3>索引创建</h3><p>在<code>FileItem</code>类中加入以下方法，这个方法先创建一个<code>CSSearchableItemAttributeSet</code>，然后通过它创建<code>CSSearchableItem</code>，最后将<code>CSSearchableItem</code>放入设备中：</p>
+<pre class="prettyprint lang-c">
+
+-(void) buildSearchableItem{
+    CSSearchableItemAttributeSet*  attributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString*)kUTTypeText];
+    
+    attributeSet.title = self.name;
+    CSSearchableItem *item = [[CSSearchableItem alloc] initWithUniqueIdentifier:
+                              [self indexPath]
+                                                               domainIdentifier:@"markdisk.file" attributeSet:attributeSet];
+    
+    [[CSSearchableIndex defaultSearchableIndex] indexSearchableItems:@[item] completionHandler:^(NSError * error) {
+        if (error) {
+            NSLog(@"buildSearchableItem Error:%@",error.localizedDescription);
+            
+        }
+    }];
+}</pre>
+<p>这里使用<code>markdisk.file</code>作为domain ID。</p>
+<h3>索引的删除</h3><p>在文件被删除时，使用如下的代码根据其相对路径删除其对应的索引:</p>
+<pre class="prettyprint lang-c">
+
+ [[CSSearchableIndex defaultSearchableIndex] deleteSearchableItemsWithIdentifiers:@[[_itemToRemove indexPath] ] completionHandler:^(NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"%@", error.localizedDescription);
+            }
+        }];</pre>
+<p>这里_itemToRemove indexPath]可以返回文件的相对路径。<br/><code>deleteSearchableItemsWithIdentifiers</code>需要传入一个数组，所以将一个索引放入数组中：<code>@[[_itemToRemove indexPath] ]</code></p>
+<p>CSSearchableIndex类提供了三个方法来删除索引:<br/></p>
+<pre class="prettyprint lang-- deleteAllSearchableItemsWithCompletionHandler:">
+
+- deleteSearchableItemsWithDomainIdentifiers:completionHandler:
+- deleteSearchableItemsWithIdentifiers:completionHandler:</pre>
+<p>分别删除应用所创建的所有索引，按domain ID删除索引，按ID删除索引。<br/></p>
+<h3>响应搜索结果</h3><p>在用户选中搜索结果时，程序要打开对应的文件。<br/>要实现这个目标，只需要在AppDelegate中实现<code>continueUserActivity</code>方法。我的实现如下：</p>
+<pre class="prettyprint lang-c">
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler {
+    if ([[userActivity activityType] isEqualToString:CSSearchableItemActionType]) {
+	//获取唯一ID，在MarkDisk中，它即是文件的相对路径
+        NSString *uniqueIdentifier = [userActivity.userInfo objectForKey:CSSearchableItemActivityIdentifier];
+       //显示对应的文件，代码略 
+	...
+    }
+    return YES;
+}</pre>
+<p>显示文件的效果如下：<br/><img src="images/1461500876.507122.png" alt="comment" /><br/></p>
+<h1>总结</h1><p>本文总结了Spotlight的相关概念和使用方法。<br/>MarkDisk新版本已经提交，应该一周左右可以上线。<br/></p>
+<h1>参考资料</h1><p><a href="https://developer.apple.com/library/ios/documentation/general/conceptual/appsearch/index.html#//apple_ref/doc/uid/tp40016308">App Search Programming Guide</a><br/><a href="http://strivingboy.github.io/blog/2015/09/27/ios9/">一篇介绍通用链接的文章</a></p>
+
+              </div>
+              
+</article>

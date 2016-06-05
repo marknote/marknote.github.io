@@ -6,8 +6,7 @@ function loadArticle(title){
     $.get(url, function(data){
           //alert("Data Loaded: " + data);
           $("div.page-content div.wrapper div.home").html(data);
-          ga('set', 'page', url);
-		  ga('send', 'pageview');
+          
           $('pre.prettyprint').each(function(i, block) {
                     hljs.highlightBlock(block);
                     });
@@ -15,6 +14,8 @@ function loadArticle(title){
                     hljs.highlightBlock(block);
                     });
           });
+          ga('set', 'page', url);
+		  ga('send', 'pageview');
 }
 
 var QueryString = function () {
