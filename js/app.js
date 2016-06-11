@@ -1,18 +1,17 @@
 function loadArticle(title){
     var url = encodeURI(title );
-    if (url=== "undefined"){ 
-    	url = "default.html";
+    if (url=== "undefined"){
+        url = "default.html";
     }
     $.get(url, function(data){
           //alert("Data Loaded: " + data);
           $("div.page-content div.wrapper div.home").html(data);
-          
           $('pre.prettyprint').each(function(i, block) {
-                    hljs.highlightBlock(block);
-                    });
+                                    hljs.highlightBlock(block);
+                                    });
           $('pre code').each(function(i, block) {
-                    hljs.highlightBlock(block);
-                    });
+                             hljs.highlightBlock(block);
+                             });
           });
           ga('set', 'page', url);
 		  ga('send', 'pageview');
@@ -44,9 +43,9 @@ $(document).ready(function() {
                   var page = QueryString.page;
                   //alert(page);
                   if(window.location.pathname.indexOf("index.html")>=0 || window.location.pathname === "/"){
-                  	loadArticle(page);
+                  loadArticle(page);
                   }
-});
+                  });
 
 
 

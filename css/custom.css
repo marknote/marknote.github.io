@@ -8,51 +8,51 @@
     
 }
 .site-title,.site-nav,.site-nav .page-link{
-	color:#EDEDED !important;
+    color:#EDEDED !important;
 }
 
 
 
 
 footer{
-background-color:#020202;
-
+    background-color:#020202;
+    
 }
 .footer-col,.footer-col span{
-color:#dddddd;
-
+    color:#dddddd;
+    
 }
 .card{
-width:600px; 
-height:400px;
-/*background-color:#020202;*/
-position: relative;
+    width:600px;
+    height:400px;
+    /*background-color:#020202;*/
+    position: relative;
 }
 
 .card div.info{
-	color:white;
-	position: relative;
+    color:white;
+    position: relative;
     top: 200px;
     right:40px;
     background-color: rgba(0,0,0,0.4);
-   
+    
 }
 .info h1, .info h3{
-	color:white;
-	text-align: right;
-	border-bottom: 0;
+    color:white;
+    text-align: right;
+    border-bottom: 0;
 }
 #card-marknotes{
-	background-image:url("../images/MarkNotes.jpg");
-	background-size:100% 100%;
+    background-image:url("../images/MarkNotes.jpg");
+    background-size:100% 100%;
 }
 #card-markphoto{
-	background-image:url("../images/MarkPhoto.jpg");
-	background-size:100% 100%;
+    background-image:url("../images/MarkPhoto.jpg");
+    background-size:100% 100%;
 }
 #card-markdisk{
-	background-image:url("../images/MarkDisk.jpg");
-	background-size:100% 100%;
+    background-image:url("../images/MarkDisk.jpg");
+    background-size:100% 100%;
 }
 
 /*.jcarousel{width:600px; height:400px;}*/
@@ -62,14 +62,14 @@ position: relative;
     margin: 20px auto;
     position: relative;
     /*border: 10px solid #fff;
-    width: 600px;
-    height: 400px;*/
+     width: 600px;
+     height: 400px;*/
     -webkit-border-radius: 5px;
-       -moz-border-radius: 5px;
-            border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
     -webkit-box-shadow: 0 0 2px #999;
-       -moz-box-shadow: 0 0 2px #999;
-            box-shadow: 0 0 2px #999;
+    -moz-box-shadow: 0 0 2px #999;
+    box-shadow: 0 0 2px #999;
 }
 
 
@@ -104,6 +104,7 @@ position: relative;
 
 .jcarousel li {
     float: left;
+    list-style: none;
 }
 
 /** Carousel Controls **/
@@ -115,25 +116,26 @@ position: relative;
     width: 30px;
     height: 30px;
     text-align: center;
-    background: #4E443C;
+    
+    background-color: #c52d2f;
     color: #fff;
     text-decoration: none;
     text-shadow: 0 0 1px #000;
     font: 24px/27px Arial, sans-serif;
     -webkit-border-radius: 30px;
-       -moz-border-radius: 30px;
-            border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
     -webkit-box-shadow: 0 0 2px #999;
-       -moz-box-shadow: 0 0 2px #999;
-            box-shadow: 0 0 2px #999;
+    -moz-box-shadow: 0 0 2px #999;
+    box-shadow: 0 0 2px #999;
 }
 
 .jcarousel-control-prev {
-    left: -50px;
+    left: 2px;
 }
 
 .jcarousel-control-next {
-    right: -50px;
+    right: 2px;
 }
 
 .jcarousel-control-prev:hover span,
@@ -175,11 +177,12 @@ position: relative;
 }
 
 .jcarousel-pagination a.active {
-    background: #4E443C;
+    background: #c52d2f;
     color: #fff;
     opacity: 1;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.75);
 }
+
 
 
 
