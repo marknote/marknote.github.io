@@ -1,0 +1,36 @@
+<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <header class="post-header">
+        
+        <p class="post-meta"><time datetime="Nov 12, 2016" itemprop="datePublished">Nov 12, 2016</time></p>
+    </header>
+    
+    <div class="post-content" itemprop="articleBody">
+        <h1>基于iCloud的文档同步机制开发－ 00缘起</h1><p>tags: 开发随笔<br/></p>
+<p>从开始开发  <a href="https://itunes.apple.com/app/marknote-take-notes-markdown/id991297585?mt=8">MarkNote</a> 的时候我就想给这款应用加上云同步的机制。后来mac版的MarkNotes也上架了，同步机制显得更重要了。<br/></p>
+<p>然而，我却一直没有动手。主要的挑战是文档同步需要考虑的因素太多。理想的文档同步不应该只是单向的备份方式，它应该以一种对用户透明的方式来实现多设备之间的信息共享和版本管理。<br/></p>
+<p>前段时间随着 MarkNote和 MarkNotes的其他功能基本完善，使得我有时间来思考这个问题，同时参考了很多资料。<br/></p>
+<p>首先整理一下我的需求：<br/><ul>
+<li>首先用户信息的安全是最重要的；所依赖的服务应该足够安全；</li>
+<li>最好是Serverless的，我没有钱和精力去维护自己的服务器；</li>
+<li>应该是基于文件的同步;</li>
+<li>实现多设备的文件同步。我希望用户可以共享iOS上的MarkNote和mac上MarkNotes资料可以共享;</li>
+<li>同步的方式应该尽量的简单，最好不需要用户去处理版本冲突之类的问题；</li>
+<li>服务不要给一般的用户带来额外的费用;</li>
+<li>服务最好国内和国际用户都可以使用，目前来看我的两个应用最主要的用户来自中国和美国，需要让他们都可以访问；</li>
+</ul>
+</p>
+</ul>
+<p>通过整理需求，基本上可选的方式也就不多了：<br/><ul>
+<li>国内的一些服务要么觉得不够安全或者稳定性有待考证;</li>
+<li>大牌的文件共享服务dropbox或者box虽然不错，但是国内访问是个问题;</li>
+<li>Parse.com虽然看起来不错，可惜在我想用它的时候，它已经挂了;</li>
+<li>Google的firebase看起来很帅，不错貌似是数据库方式的，而我的需求还是文档同步，有点别扭；</li>
+</ul>
+</p>
+</ul>
+<p>这么看下来，只有iCloud了。</p>
+
+    </div>
+    
+</article>

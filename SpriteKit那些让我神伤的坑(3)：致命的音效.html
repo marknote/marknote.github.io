@@ -1,13 +1,12 @@
-
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-              
-              <header class="post-header">
-                  
-                  <p class="post-meta"><time datetime="27 Feb 2016" itemprop="datePublished">27 Feb 2016</time></p>
-              </header>
-              
-              <div class="post-content" itemprop="articleBody">
-                  <h1>SpriteKit那些让我神伤的坑(3)：致命的音效</h1><p>tags:开发随笔<br/></p>
+    
+    <header class="post-header">
+        
+        <p class="post-meta"><time datetime="Feb 27, 2016" itemprop="datePublished">Feb 27, 2016</time></p>
+    </header>
+    
+    <div class="post-content" itemprop="articleBody">
+        <h1>SpriteKit那些让我神伤的坑(3)：致命的音效</h1><p>tags:开发随笔<br/></p>
 <h2>致命的音效</h2><p>音效是游戏的一个重要元素。SpriteKit对音效也提供了支持。<br/>在SpriteKit中有2种方式来播放音效：<br/>1. 使用SKAudioNode:</p>
 <pre class="prettyprint lang-swift">
 
@@ -63,6 +62,6 @@ var dict2 = [String:AVAudioPlayer]()
 	}</pre>
 <p>注意，由于我的游戏中，是几个声音文件（.mp3）反复播放，所以我将它们放在Dictionary中，避免每次都要加载。<br/>使用后，崩溃没了，内存的使用也终于正常了。</p>
 
-              </div>
-              
+    </div>
+    
 </article>

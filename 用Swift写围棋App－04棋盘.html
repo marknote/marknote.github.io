@@ -1,13 +1,12 @@
-
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-              
-              <header class="post-header">
-                  
-                  <p class="post-meta"><time datetime="27 Dec 2015" itemprop="datePublished">27 Dec 2015</time></p>
-              </header>
-              
-              <div class="post-content" itemprop="articleBody">
-                  <h1>用Swift写围棋App－04棋盘</h1><p>tags: 开发随笔<br/></p>
+    
+    <header class="post-header">
+        
+        <p class="post-meta"><time datetime="Dec 27, 2015" itemprop="datePublished">Dec 27, 2015</time></p>
+    </header>
+    
+    <div class="post-content" itemprop="articleBody">
+        <h1>用Swift写围棋App－04棋盘</h1><p>tags: 开发随笔<br/></p>
 <p>到现在为止，虽然很顺利，但这个应用只是一个普通的应用，和围棋一点关系都没有 :)<br/>但是，这些工作是必须的。所谓万事开头难，没有搞定琐碎的事情打基础，伟大的想法无法实现。<br/>接下来，我们将实现和围棋相关的逻辑。<br/>第一件事是棋盘。<br/>围棋盘由19条横线19条竖线组成，共361个交叉点，最外边的线称为边线。为了便于识别棋子的位置，棋盘上划了九个点，术语称做“星”，中央的星点又称为“天元”。棋盘可分为“角”、“边”以及“中腹”。正式比赛所用棋盘为19×19。<br/>我们需要创建一个新的 UI组件，将它命名为<code>GobanView</code>，它继承自<code>UIView</code>。要绘制棋盘，我们基本上只需要覆盖drawRect方法。<br/>在这里，我们主要要做以下几件事:<br/><ul>
 <li>绘制背景图。我们要找一个木纹的高逼格的看起来有感觉的背景；</li>
 <li>绘制19*19的线条；</li>
@@ -71,6 +70,6 @@ class GobanView: UIView {
 <p><img src="images/1451217118.367676.png" alt="comment" /><br/></p>
 <p>看起来很好，将代码push到 github上<br/>https://github.com/marknote/GoTao</p>
 
-              </div>
-              
+    </div>
+    
 </article>

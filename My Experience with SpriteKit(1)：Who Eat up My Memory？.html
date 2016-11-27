@@ -1,13 +1,12 @@
-
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-              
-              <header class="post-header">
-                  
-                  <p class="post-meta"><time datetime="9 Mar 2016" itemprop="datePublished">9 Mar 2016</time></p>
-              </header>
-              
-              <div class="post-content" itemprop="articleBody">
-                  <h1>My Experience with SpriteKit(1)：Who Eat up My Memory？</h1><p>tags:ThoughtsOnDevelopment<br/></p>
+    
+    <header class="post-header">
+        
+        <p class="post-meta"><time datetime="Mar 9, 2016" itemprop="datePublished">Mar 9, 2016</time></p>
+    </header>
+    
+    <div class="post-content" itemprop="articleBody">
+        <h1>My Experience with SpriteKit(1)：Who Eat up My Memory？</h1><p>tags:Thoughts<br/></p>
 <p>Once upon a time I said I would create games. So I did.<br/>Swift is the future of iOS development，so this time I chose to code in Swift instead of OC. I had some experience coding Swift before, so working with Swift is not so challenges for me.<br/>Considering XCode has good builtin support to SpriteKit, I decided to build my first game with SpriteKit. While working with SpriteKit is not so smooth. So many problems I met.<br/>Today, I will tell you one of the stories.<br/>When I conducted load testing with my game( playing hard with my game), I found the game would run slower and slower.<br/>I immediately started to inspect this problem. It is really eye opener to me:<br/></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1113197-b9e8d8198eab1902.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="memory.jpg" /><br/></p>
 <p>Oh my god! The memory usage keeps increasing itself, even the game paused.<br/>Where is my memory?<br/>I started to seek the memory lost. I carefully checked wherever objects are created, to ensure they will be released properly after usage.<br/>Based on my previous experience, memory leak usually happens with objects put into collections... While no luck  after 2 days hard work, unless finding that, the memory happens somewhere insider some SpriteKit event loop, and seems nothing to do with my code.<br/>So I was forced to choose my killer solution. I seldom use this killer solution, because, the solution is effective, while it will make my life so hard every time.<br/>The solution is to comment out code line by line.<br/>The solution was so great that I felt so hard from beginning to use it. While finally it really helped me.<br/>My code in ViewController is like below:</p>
@@ -39,6 +38,6 @@ override func viewDidLoad() {
 skView.showsPhysics = true</pre>
 <p>I could not imagine why  <strong>showsPhysics</strong> will eating up my memory.<br/>After googling, I found many people meet this problem, like the question raised here:<br/>http://stackoverflow.com/questions/34846482/memory-leak-for-showsphysics<br/>Obviously this is a big bug with SpriteKit.<br/>While who will know this is the truth?<br/>Well, I spent 3 days of my precious life on this boring problem.<br/>If you happen to read my article, it might help to save you 3 days. It is really a good deal for you :)</p>
 
-              </div>
-              
+    </div>
+    
 </article>

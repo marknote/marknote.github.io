@@ -1,13 +1,12 @@
-
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-              
-              <header class="post-header">
-                  
-                  <p class="post-meta"><time datetime="20 Feb 2016" itemprop="datePublished">20 Feb 2016</time></p>
-              </header>
-              
-              <div class="post-content" itemprop="articleBody">
-                  <h1>SpriteKit那些让我神伤的坑(1)：我的内存被狗吃了吗？</h1><p>tags:开发随笔<br/></p>
+    
+    <header class="post-header">
+        
+        <p class="post-meta"><time datetime="Feb 20, 2016" itemprop="datePublished">Feb 20, 2016</time></p>
+    </header>
+    
+    <div class="post-content" itemprop="articleBody">
+        <h1>SpriteKit那些让我神伤的坑(1)：我的内存被狗吃了吗？</h1><p>tags:开发随笔<br/></p>
 <p>我说过要进军游戏开发领域。<br/>于是我就做了。<br/>Swift是iOS开发的未来，所以这次我选择基于 Swift而不是OC。之前做过一些准备，所以上手Swift并不难。<br/>考虑到SpriteKit已经被Xcode直接支持，于是顺手也就上了SpriteKit。不过使用SpritKit的经历可不愉快。一路用下来，坑太多。<br/></p>
 <p>今天就说其中一个吧。<br/>在使劲对游戏做压力测试的时候（使劲玩自己的游戏！！）的时候，我发现游戏越来越慢。<br/>果然监控之！不看不知道，一看吓一跳：<br/></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1113197-b9e8d8198eab1902.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="memory.jpg" /><br/>这是什么鬼？内存居然不断自己增长，哪怕什么都没做。<br/>我的内存被狗吃了吗？<br/>我开始了寻找失去的内存。仔细检查每一处可能出现的地方，确保创建的对象不用的时候可以释放。<br/>根据以前的经验，尤其是放在容器或数组中的对象。<br/>找了2天，毫无结果。除了一个发现：使用Instrument分析的时候发现内存泄漏的地方似乎是SpriteKit自己的循环中，和我自己的代码一点关系都没有。<br/></p>
@@ -40,6 +39,6 @@ override func viewDidLoad() {
 skView.showsPhysics = true</pre>
 <p>顺手查了一下，不少人遇到这个问题，比如：<br/>http://stackoverflow.com/questions/34846482/memory-leak-for-showsphysics<br/>很显然，这是SpriteKit的一个大大的bug。<br/>关键是开始的时候谁会想得到呢？<br/>好吧，这个问题耗费了我大约3天的宝贵生命。如果你看到了我的这段文字，说不定你将来就不用这样耗费3天呢。<br/>你真是赚大了，呵呵～</p>
 
-              </div>
-              
+    </div>
+    
 </article>

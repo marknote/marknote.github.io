@@ -1,13 +1,12 @@
-
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-              
-              <header class="post-header">
-                  
-                  <p class="post-meta"><time datetime="28 Dec 2015" itemprop="datePublished">28 Dec 2015</time></p>
-              </header>
-              
-              <div class="post-content" itemprop="articleBody">
-                  <h1>用Swift写围棋App－06解析器初版</h1><p>tags:开发随笔<br/></p>
+    
+    <header class="post-header">
+        
+        <p class="post-meta"><time datetime="Dec 28, 2015" itemprop="datePublished">Dec 28, 2015</time></p>
+    </header>
+    
+    <div class="post-content" itemprop="articleBody">
+        <h1>用Swift写围棋App－06解析器初版</h1><p>tags:开发随笔<br/></p>
 <p>了解了棋谱的格式后，我们终于可以撸代码了！<br/>我们来尝试一下TDD，也就是Test Driven Development,测试驱动开发。<br/>先定义相关的Model，开始的时候不用尽善尽美，满足最初的测试就好了。后面再不断改进好了。<br/>先定义一个类Location，它表示每一步棋放在那个位置：</p>
 <pre class="prettyprint lang-swift">
 
@@ -116,6 +115,6 @@ class Move: NSObject {
 </pre>
 <p>再按command + U，奇迹出现了：<br/><img src="images/1451314290.957152.png" alt="comment" /><br/>居然通过了测试！<br/>虽然这只是最简单的一个版本，它却麻雀虽小，五脏俱全，已经具备了一个优秀应用的架子。<br/>很好！<br/>再次Commit和 Push代码到github https://github.com/marknote/GoTao<br/>下面就需要多写几个测试用例，来改进解析器了。</p>
 
-              </div>
-              
+    </div>
+    
 </article>

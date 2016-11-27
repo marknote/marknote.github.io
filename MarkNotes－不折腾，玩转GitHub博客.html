@@ -1,13 +1,12 @@
-
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-              
-              <header class="post-header">
-                  
-                  <p class="post-meta"><time datetime="9 Jan 2016" itemprop="datePublished">9 Jan 2016</time></p>
-              </header>
-              
-              <div class="post-content" itemprop="articleBody">
-                  <h1>MarkNotes－不折腾，玩转GitHub博客</h1><p>tags:应用<br/></p>
+    
+    <header class="post-header">
+        
+        <p class="post-meta"><time datetime="Jan 9, 2016" itemprop="datePublished">Jan 9, 2016</time></p>
+    </header>
+    
+    <div class="post-content" itemprop="articleBody">
+        <h1>MarkNotes－不折腾，玩转GitHub博客</h1><p>tags:应用<br/></p>
 <p><strong>利益声明</strong>： <em>本人是下面提到的MarkNotes应用的开发者。这是一款收费应用。本文存在毛遂自荐的广告嫌疑。不喜者请无视。</em><br/></p>
 <h2>由来</h2><p>最初的时候我开发了iOS上的应用MarkNote，其定位是一个笔记应用。我喜欢EverNote，但是EverNote越拉越复杂，同时笔记需要联网，在iPhone上用起来很不方便。而且我喜欢markdown，希望可以直接用markdown记笔记。于是就开发了这个应用。<br/>在marknote开发出来之后，才发现应用的开发只是开始，让别人<strong>知道</strong>你的应用是一件很难的事情。于是开始找各种宣传的方式，包括写博客。<br/>开始写博客之后，才发现整起来麻烦。同时也发现这是一个机会。于是我将MarkNote移植到Mac上，并增加了将笔记导出为博客的功能。<br/>目前我自己的博客https://marknote.github.io/ 都是采用MarkNotes生成。我发表到jianshu的所有文章（包括正在写的这篇），也都是在MarkNotes上编辑的。简书的编辑器对makrdown有很好的支持，但是我希望自己能随时随地记录想法，还想一稿多投，所以一直都用MarkNotes。<br/></p>
 <h2>使用</h2><h3>前提</h3><p>你需要了解一点git的使用，这个其实很简单，尤其是用github desktop，能极大的降低操作的难度。<br/>如果你了解一点markdown语法，那是最好的。MarkNotes本身对绝大部分常用标记提供了可视化支持。<br/><h3>在github上开通pages</h3>首先你需要一个github账号。如果没有的话，你需要去<a href="https://github.com/">这里</a>注册一个。<br/>然后，你需要创建一个仓库(repository)。这个仓库的名字必须是<code>{你的用户名}.github.io</code>的格式。比如我的博客其仓库名为:marknote.github.io<br/>创建完仓库后，可以用github desktop将这个仓库clone下来。<br/>如果你没有这个工具的话，可以在<a href="https://desktop.github.com/">这里</a> 下载。<br/>在github desktop中选File ->Clone Repository你应该可以看到刚才你建的Repository<br/></p>
@@ -16,6 +15,6 @@
 <p>3. 导出<br/>现在你可以导出所有选中的笔记。选择菜单项“文件”—>“将所列笔记导出为静态博客站点&quot;。<br/>快捷键是<code>苹果键+L</code>。</p>
 <p><img src="images/1452301440.546068.jpeg" alt="comment" /><br/><h3>上传笔记到github</h3>首先将导出的笔记拷贝到你的repository的本地目录（注意，不需要拷贝Notes目录，只需要拷贝Notes目录下的所有文件和文件夹。）在导出时MarkNotes会在目标目录创建一个Notes文件夹，所有的笔记生成到这个文件夹下。这样做是为了防止不小心覆盖了你的文件。<br/>然后，在github desktop中<code>commit</code>再点一个<code>Sync</code>，几分钟后在浏览器中访问你自己的博客站点<code>https://{你的用户名}.github.io</code>就可以看到自己的博客了。</p>
 
-              </div>
-              
+    </div>
+    
 </article>

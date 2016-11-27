@@ -1,13 +1,12 @@
-
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-              
-              <header class="post-header">
-                  
-                  <p class="post-meta"><time datetime="27 Dec 2015" itemprop="datePublished">27 Dec 2015</time></p>
-              </header>
-              
-              <div class="post-content" itemprop="articleBody">
-                  <h1>用Swift写围棋App－03搭架子</h1><p>tags: 开发随笔<br/></p>
+    
+    <header class="post-header">
+        
+        <p class="post-meta"><time datetime="Dec 27, 2015" itemprop="datePublished">Dec 27, 2015</time></p>
+    </header>
+    
+    <div class="post-content" itemprop="articleBody">
+        <h1>用Swift写围棋App－03搭架子</h1><p>tags: 开发随笔<br/></p>
 <p>基本上，我的构思是这样的：<br/>A: 应用启动后，进入一个棋谱列表，可以看到一些可用的棋谱；<br/>B: 每一个棋谱，会有一个标题，比如“第一届日本最强者决定战吴清源对高川格”，还有一些小字说明额外的信息，比如“对弈时间：1957年2月20日”；<br/>C: 用户选中一行后，应用会加载相应的棋谱；<br/></p>
 <p>从这个设想来看，一个典型的UINavigatioController + UITableView似乎可以构成主要的UI。<br/></p>
 <p>打开Main.stroyboard，选中之前Xcode自动创建的那个ViewController，在菜单中找到Editor->Embed In -> Navigation Controller。<br/></p>
@@ -75,6 +74,6 @@ import UIKit
 <p>注意，这里因为UITableViewDataSource, UITableViewDelegate是Objective-c中定义的，所以这个HomeViewController必须声明为public的。否则一堆错误。<br/>修改完毕，运行是这个样子的：<br/><img src="images/1451214592.223099.png" alt="comment" /><br/></p>
 <p>看起来很好，将代码push到 github上<br/>https://github.com/marknote/GoTao</p>
 
-              </div>
-              
+    </div>
+    
 </article>

@@ -1,13 +1,12 @@
-
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-              
-              <header class="post-header">
-                  
-                  <p class="post-meta"><time datetime="20 Feb 2016" itemprop="datePublished">20 Feb 2016</time></p>
-              </header>
-              
-              <div class="post-content" itemprop="articleBody">
-                  <h1>SpriteKit那些让我神伤的坑(2)：不能重新赋值的GKGridGraph</h1><p>tags:开发随笔<br/>上次说到SpriteKit中有各种奇葩的东西。今天再讲一个，这次的主角是GKGridGraph。<br/>严格意义上讲，这个类并不属于SpriteKit，而是被包含在GameplayKit。不过SpriteKit开发经常需要用到GameplayKit，反正要吐槽，干脆就一起吐了吧。<br/>我做的游戏是一个塔防类游戏，需要计算路径。而GKGridGraph用来描述二维世界中的连接。<br/>在场景生成的时候，我需要创建GKGridGraph</p>
+    
+    <header class="post-header">
+        
+        <p class="post-meta"><time datetime="Feb 20, 2016" itemprop="datePublished">Feb 20, 2016</time></p>
+    </header>
+    
+    <div class="post-content" itemprop="articleBody">
+        <h1>SpriteKit那些让我神伤的坑(2)：不能重新赋值的GKGridGraph</h1><p>tags:开发随笔<br/>上次说到SpriteKit中有各种奇葩的东西。今天再讲一个，这次的主角是GKGridGraph。<br/>严格意义上讲，这个类并不属于SpriteKit，而是被包含在GameplayKit。不过SpriteKit开发经常需要用到GameplayKit，反正要吐槽，干脆就一起吐了吧。<br/>我做的游戏是一个塔防类游戏，需要计算路径。而GKGridGraph用来描述二维世界中的连接。<br/>在场景生成的时候，我需要创建GKGridGraph</p>
 <pre class="prettyprint lang-swift">
 
 graph = GKGridGraph(fromGridStartingAt: int2(0, 0), width: Int32(gridColumns), height: Int32(gridRows), diagonalsAllowed: false)</pre>
@@ -50,6 +49,6 @@ func initGraph(){
 </pre>
 <p>经过验证，这个方法可以完美解决这个问题。<br/>如果你恰好也要用GKGridGraph，并且很幸运的看到了我的这篇文字，说不定可以节省你几千个脑细胞呢:)</p>
 
-              </div>
-              
+    </div>
+    
 </article>

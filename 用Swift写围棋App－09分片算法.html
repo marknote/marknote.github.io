@@ -1,13 +1,12 @@
-
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-              
-              <header class="post-header">
-                  
-                  <p class="post-meta"><time datetime="1 Jan 2016" itemprop="datePublished">1 Jan 2016</time></p>
-              </header>
-              
-              <div class="post-content" itemprop="articleBody">
-                  <h1>用Swift写围棋App－09分片算法</h1><p>tags: 开发随笔<br/></p>
+    
+    <header class="post-header">
+        
+        <p class="post-meta"><time datetime="Jan 1, 2016" itemprop="datePublished">Jan 1, 2016</time></p>
+    </header>
+    
+    <div class="post-content" itemprop="articleBody">
+        <h1>用Swift写围棋App－09分片算法</h1><p>tags: 开发随笔<br/></p>
 <p>到前天为止，我们的应用已经可以基本解析棋谱，并将每一步棋绘制到棋盘上。<br/>这很好。<br/>不过，目前最大的一个问题在于，目前应用还太傻。它只知道一步步的摆放棋子，它不知道哪些棋子是死的。<br/><img src="images/1451613354.571210.png" alt="comment" /><br/>比如，在上图中，如果白棋下在A处，则三颗黑棋气尽，应该被提掉，正确的结果应该如下图所示。然而我们的应用现在依然会绘制这三颗棋。<br/><img src="images/1451613363.741934.png" alt="comment" /><br/>因此，我们需要一种算法，可以判断每一颗棋是不是死的。<br/>要完成这个任务，我们可以需要2个子任务：<br/>1.识别哪些棋是连成片的；<br/>2.计算每一片棋的气（liberty），liberty == 0,则整片棋都死掉；<br/>今天我们先解决分片的问题。<br/>一颗一颗连在一起的棋，我们称之为<code>一片</code>。2颗同色的棋，只有紧紧的挨着，才能算<code>连</code>在一起。这里有2个条件:必须同色，必须挨着。我们还是来TDD。先写测试用例：</p>
 <pre class="prettyprint lang-swift">
 
@@ -98,6 +97,6 @@ func assignGroups() -&gt;[MoveGroup]{
         }</pre>
 <p><img src="images/1451634769.696280.png" alt="comment" /><br/>这个效果就是我想要的。<br/>太好不过。<br/>现在push最新的代码到github:https://github.com/marknote/GoTao<br/>然后就可以收工了。<br/>下一步就可以写计算liberty的处理了。</p>
 
-              </div>
-              
+    </div>
+    
 </article>

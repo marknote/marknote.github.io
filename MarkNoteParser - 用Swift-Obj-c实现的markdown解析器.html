@@ -1,13 +1,12 @@
-
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-              
-              <header class="post-header">
-                  
-                  <p class="post-meta"><time datetime="22 Dec 2015" itemprop="datePublished">22 Dec 2015</time></p>
-              </header>
-              
-              <div class="post-content" itemprop="articleBody">
-                  <h1>MarkNoteParser - 用Swift/Obj-c实现的markdown解析器</h1><p>tags:开发随笔<br/></p>
+    
+    <header class="post-header">
+        
+        <p class="post-meta"><time datetime="Dec 22, 2015" itemprop="datePublished">Dec 22, 2015</time></p>
+    </header>
+    
+    <div class="post-content" itemprop="articleBody">
+        <h1>MarkNoteParser - 用Swift/Obj-c实现的markdown解析器</h1><p>tags:开发随笔<br/></p>
 <p>我用Obj-c和Swfit实现了一个简单的markdown解析器，源代码放在github上了。<br/>Objective-C 版本:    https://github.com/marknote/MarkNoteParserObjC<br/>Swift 版本: https://github.com/marknote/MarknoteParser<br/></p>
 <h2>缘由</h2><p>我有一个小应用 <a href="https://itunes.apple.com/cn/app/marknote/id991297585?ls=1&mt=8">MarkNote</a> ，这是一个使用markdown语法来记笔记的小工具。<br/>最开始的时候, 我使用 <a href="https://github.com/chjj/marked">marked</a> 来把 markdown 渲染为HTML。marked使用起来简单。不过，一个native的应用居然用基于javascript的引擎来做解析，心里总觉得有点不爽 :)<br/>找了找没找到合适的<br/>基于Swfit/Object-c实现的 markdown解析起 , 我决定自己轮子一个。于是就有了这个项目。<br/>一开始我只是实现了Swfit版本，后来xcode升级到7.0之后，swift的应用文件生成很大，很多时候都大于40m（当然，app store最后会优化，尺寸大大减少）。于是觉得obj-c也很有必要，就又一口气撸了一个 obj-c版本的。<br/></p>
 <h2>使用方法</h2><h3>swift 版本</h3><ul>
@@ -102,6 +101,6 @@ alert(s);
 &lt;table&gt;&lt;tr&gt;&lt;th&gt; Tables        &lt;/th&gt;&lt;th&gt; Are           &lt;/th&gt;&lt;th style="text-align: center;"&gt; Cool &lt;/th&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; col 3 is      &lt;/td&gt;&lt;td&gt; right-aligned &lt;/td&gt;&lt;td style="text-align: center;"&gt; $1600 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; col 2 is      &lt;/td&gt;&lt;td&gt; centered      &lt;/td&gt;&lt;td style="text-align: center;"&gt;   $12 &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt; zebra stripes &lt;/td&gt;&lt;td&gt; are neat      &lt;/td&gt;&lt;td style="text-align: center;"&gt;    $1 &lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;The outer pipes (|) are optional, and you don't need to make the raw Markdown line up prettily. You can also use inline Markdown.&lt;br/&gt;&lt;/p&gt;</pre>
 <h2>问题反馈</h2><p>如果你有任何问题或者建议，可以在这里给我反馈。谢谢！</p>
 
-              </div>
-              
+    </div>
+    
 </article>

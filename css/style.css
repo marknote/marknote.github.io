@@ -5,7 +5,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
     -webkit-text-size-adjust: 100%;
     color: #333;
    
-    font-family: AvenirNext-Regular,"Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+    font-family: "PingHei","Helvetica Neue","Helvetica","STHeitiSC-Light","Arial",sans-serif;
     font-size: 16px;
     line-height: 1.6;
     word-wrap: break-word;
@@ -86,7 +86,7 @@ th {
 }
 
 input {
-    font: 13px/1.4 AvenirNext-Regular,Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+    font: 13px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 a {
@@ -720,7 +720,7 @@ dl, dd, ol, ul, figure {
  * Basic styling
  */
 body {
-    font: 400 16px/1.5 AvenirNext-Regular,"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font: 400 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: #111;
     background-color: #fdfdfd;
     -webkit-text-size-adjust: 100%;
@@ -737,7 +737,7 @@ h1, h2, h3, h4, h5, h6,
 p, blockquote, pre,
 ul, ol, dl, figure,
 .highlight {
-    margin-bottom: 14px; }
+    margin-bottom: 15px; }
 
 /**
  * Images
@@ -999,10 +999,5 @@ blockquote > :last-child {
 @media screen and (max-width: 800px) {
     .post-content h4 {
         font-size: 18px; } }
-
-.highlight
-{
-    background-color:#e5666f;
-}
 
 
