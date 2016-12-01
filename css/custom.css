@@ -5,6 +5,8 @@
     min-height: 56px;
     position: relative;
     background-color:#020202;
+    padding-top: 30px;
+    padding-bottom: 20px;
     
 }
 .site-title,.site-nav,.site-nav .page-link{
