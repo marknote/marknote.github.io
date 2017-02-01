@@ -1,7 +1,7 @@
 function loadArticle(title){
     var url = encodeURI(title );
     if (url=== "undefined"){
-        url = "default.html";
+        url = "MarkNotes.html";
     }
     $.get(url, function(data){
           //alert("Data Loaded: " + data);

@@ -2,7 +2,7 @@
     
     <header class="post-header">
         
-        <p class="post-meta"><time datetime="Dec 28, 2015" itemprop="datePublished">Dec 28, 2015</time></p>
+        <p class="post-meta"><time datetime="28 Dec 2015" itemprop="datePublished">28 Dec 2015</time></p>
     </header>
     
     <div class="post-content" itemprop="articleBody">
@@ -54,8 +54,8 @@ SO[]
 </pre>
 <p>这个文件基本上可以分为2个部分：<br/>-前面一部分是记录的棋局的基本信息：<br/>比如<code>PB[本因坊秀策]BR[六段]PW[林柏荣门人]WR[七段]</code>，说的是执黑的是本因坊秀策(六段)，执白的是林柏荣门人(七段)-后面一部分都由;<code>B[xy];W[xy]</code>之类的形式组成，就是下的每一步棋的记录了。比如第一手棋，<code>;B[qd]</code>  即为，黑棋，下在了<code>qd</code>这个位置。</p>
 <p>在SGF文件中，节点node是最基本的概念。每个节点包含一些属性，属性携带信息，比如BReferenceUsageInfo 则放的是注释。<br/></p>
-<table><tr><th>节点名	</th><th> 属性 </th><th>	解释</th></tr><tr><td>黑方/白方人名 </td><td>	PBReferenceUsageInfo </td><td>	黑方/白方人名</td></tr><tr><td>黑方／白方棋力 </td><td>	BRReferenceUsageInfo	</td><td> 黑白玩家的棋力等级</td></tr><tr><td>结果</td><td>	RE]</td><td> 最终结果 B+score 表示黑方胜score目</td></tr><tr><td>让子Handicap </td><td>HA] </td><td>让子数</td></tr><tr><td>时间 </td><td>	TM] </td><td> 每一步棋的时间</td></tr><tr><td>日期 </td><td>	DT] </td><td>	下棋的日期</td></tr><tr><td>赛事Event </td><td>	EV] </td><td>赛事的名称</td></tr><tr><td>回合Round </td><td>	RO]	</td><td>回合数</td></tr><tr><td>地点 </td><td>	PC]	</td><td> 下棋地点</td></tr><tr><td>规则Rules	</td><td> RU] </td><td> 规则名，比如 Japanese, Chinese, AGA, GOE, 等等</td></tr></table><p>还有一些其他的节点名，我就不翻译了。直接放在这里。<br/></p>
-<table><tr><th>节点名	</th><th> 属性 </th><th>	解释</th></tr><tr><td>Game name </td><td>	GN] </td><td>	Name of the game</td></tr><tr><td>Opening </td><td>	ON] </td><td>	Describes the opening played (e.g. san-ren-sei)</td></tr><tr><td>Game comment </td><td>	GC]	</td><td> General comment about the game</td></tr><tr><td>Source </td><td>	SO] </td><td>	Name of the source (e.g. book, journal, etc.)</td></tr><tr><td>User</td><td>	US] </td><td>	Name of user (or program) who entered the game record</td></tr><tr><td>Annotation </td><td>	AN] </td><td>	Name of the person who made the annotations</td></tr><tr><td>Copyright</td><td>	CP] </td><td>	Any copyright information</td></tr></table><p>基本上了解了这些信息，你就可以读懂棋谱啦。</p>
+<table><tr><th>节点名	</th><th> 属性 </th><th>	解释</th></tr><tr><td>黑方/白方人名 </td><td>	PBReferenceUsageInfo </td><td>	黑方/白方人名</td></tr><tr><td>黑方／白方棋力 </td><td>	BRReferenceUsageInfo	</td><td> 黑白玩家的棋力等级</td></tr><tr><td>结果</td><td>	RE[]</td><td> 最终结果 B+score 表示黑方胜score目</td></tr><tr><td>让子Handicap </td><td>HA[] </td><td>让子数</td></tr><tr><td>时间 </td><td>	TM[] </td><td> 每一步棋的时间</td></tr><tr><td>日期 </td><td>	DT[] </td><td>	下棋的日期</td></tr><tr><td>赛事Event </td><td>	EV[] </td><td>赛事的名称</td></tr><tr><td>回合Round </td><td>	RO[]	</td><td>回合数</td></tr><tr><td>地点 </td><td>	PC[]	</td><td> 下棋地点</td></tr><tr><td>规则Rules	</td><td> RU[] </td><td> 规则名，比如 Japanese, Chinese, AGA, GOE, 等等</td></tr></table><p>还有一些其他的节点名，我就不翻译了。直接放在这里。<br/></p>
+<table><tr><th>节点名	</th><th> 属性 </th><th>	解释</th></tr><tr><td>Game name </td><td>	GN[] </td><td>	Name of the game</td></tr><tr><td>Opening </td><td>	ON[] </td><td>	Describes the opening played (e.g. san-ren-sei)</td></tr><tr><td>Game comment </td><td>	GC[]	</td><td> General comment about the game</td></tr><tr><td>Source </td><td>	SO[] </td><td>	Name of the source (e.g. book, journal, etc.)</td></tr><tr><td>User</td><td>	US[] </td><td>	Name of user (or program) who entered the game record</td></tr><tr><td>Annotation </td><td>	AN[] </td><td>	Name of the person who made the annotations</td></tr><tr><td>Copyright</td><td>	CP[] </td><td>	Any copyright information</td></tr></table><p>基本上了解了这些信息，你就可以读懂棋谱啦。</p>
 
     </div>
     

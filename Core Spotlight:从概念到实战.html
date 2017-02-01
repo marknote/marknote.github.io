@@ -2,14 +2,15 @@
     
     <header class="post-header">
         
-        <p class="post-meta"><time datetime="Apr 24, 2016" itemprop="datePublished">Apr 24, 2016</time></p>
+        <p class="post-meta"><time datetime="24 Apr 2016" itemprop="datePublished">24 Apr 2016</time></p>
     </header>
     
     <div class="post-content" itemprop="articleBody">
         <h1>Core Spotlight:从概念到实战</h1><p>tags:开发随笔<br/></p>
-<p>很早就知道iOS9有了新的Search API，不过一直都没有机会使用。今天刚好想在<a href="https://itunes.apple.com/app/markdisk-transfer-manage-your/id1035317905?mt=8">MarkDisk</a> 中加入搜索功能，于是快速看了一下，并且成功实施。最终的效果如下：<br/><img src="images/1461500867.454438.png" alt="comment" /><br/></p>
+<p>很早就知道iOS9有了新的Search API，不过一直都没有机会使用。今天刚好想在<a href="https://itunes.apple.com/app/markdisk-transfer-manage-your/id1035317905?mt=8">MarkDisk</a> 中加入搜索功能，于是快速看了一下，并且成功实施。最终的效果如下：<br/></p>
+<p><img src="images/1461500867.454438.png" alt="comment" /><br/></p>
 <h1>概述</h1><h2>iOS 9 Search API概述</h2><p>iOS 9 提供了两种索引方式:<br/><ul>
-<li><strong>私有设备索引(private on-device index)</strong>。每一台iOS设备都有一个私有的索引，这个索引从来不与Apple或者在设备间共享。私有设备索引上条目只有用户可以搜到。此索引可以通过CSSearchableIndex defaultSearchableIndex]得到。</li>
+<li><strong>私有设备索引(private on-device index)</strong>。每一台iOS设备都有一个私有的索引，这个索引从来不与Apple或者在设备间共享。私有设备索引上条目只有用户可以搜到。此索引可以通过[CSSearchableIndex defaultSearchableIndex]得到。</li>
 <li><strong>Apple的服务器端索引</strong>。服务器索引只存储网站上被恰当的标志过的数据。</li>
 </ul>
 </p>
@@ -38,7 +39,7 @@
 </ul>
 <p><img src="images/1461492089.483870.png" alt="CSSearchableItemAttributeSet" /><br/></p>
 <ul>
-<li><p>CSSearchableItem：用来表示一个被索引的条目，通过来可以关联到应用内的记录。CSSearchableItem依赖于，它在构建的时候需要传入一个<code>CSSearchableItemAttributeSet</code>对象。</li>
+<li><p>CSSearchableItem：用来表示一个被索引的条目，通过来可以关联到应用内的记录。CSSearchableItem依赖于<code>CSSearchableItemAttributeSet</code>，它在构建的时候需要传入一个<code>CSSearchableItemAttributeSet</code>对象。</li>
 </ul>
 </p>
 </ul>
@@ -57,12 +58,12 @@
 </p>
 </ul>
 <h2>代码实现</h2><h3>引用spotlight所需要头文件</h3><p>在需要的地方引用以下两个头文件</p>
-<pre class="prettyprint lang-c">
+<pre class="prettyprint lang-objc">
 
  #import &lt;CoreSpotlight/CoreSpotlight.h&gt;
  #import &lt;MobileCoreServices/MobileCoreServices.h&gt;</pre>
 <h3>索引创建</h3><p>在<code>FileItem</code>类中加入以下方法，这个方法先创建一个<code>CSSearchableItemAttributeSet</code>，然后通过它创建<code>CSSearchableItem</code>，最后将<code>CSSearchableItem</code>放入设备中：</p>
-<pre class="prettyprint lang-c">
+<pre class="prettyprint lang-objc">
 
 -(void) buildSearchableItem{
     CSSearchableItemAttributeSet*  attributeSet = [[CSSearchableItemAttributeSet alloc] initWithItemContentType:(NSString*)kUTTypeText];
@@ -88,7 +89,7 @@
                 NSLog(@"%@", error.localizedDescription);
             }
         }];</pre>
-<p>这里_itemToRemove indexPath]可以返回文件的相对路径。<br/><code>deleteSearchableItemsWithIdentifiers</code>需要传入一个数组，所以将一个索引放入数组中：<code>@[[_itemToRemove indexPath] ]</code></p>
+<p>这里[_itemToRemove indexPath]可以返回文件的相对路径。<br/><code>deleteSearchableItemsWithIdentifiers</code>需要传入一个数组，所以将一个索引放入数组中：<code>@[[_itemToRemove indexPath] ]</code></p>
 <p>CSSearchableIndex类提供了三个方法来删除索引:<br/></p>
 <pre class="prettyprint lang-- deleteAllSearchableItemsWithCompletionHandler:">
 
