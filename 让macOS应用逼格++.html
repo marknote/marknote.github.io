@@ -1,18 +1,27 @@
-<article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-    
-    <header class="post-header">
-        
-        <p class="post-meta"><time datetime="31 Jan 2017" itemprop="datePublished">31 Jan 2017</time></p>
-    </header>
-    
-    <div class="post-content" itemprop="articleBody">
-        <h1>让macOS应用逼格++</h1><p>tags:开发随笔<br/></p>
+ <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+                                    
+                                    <header class="post-header">
+                                        <p class="post-meta"><span class='tag'> 开发随笔 </span>  <time datetime="Jan 31, 2017" itemprop="datePublished">Jan 31, 2017</time></p>
+                                    </header>
+                                    
+                                    <div class="post-content" itemprop="articleBody">
+                                        <h1>让macOS应用逼格++</h1><p>tags:开发随笔<br/></p>
 <p>这是一个看脸的时代。一个少女即使蕙质兰心，如果没有娇美的韶容，也很难惹人注意；同样，一款应用即使功能强大体验如行云流水，如果没有酷炫的外观，也很难招来目光。<br/></p>
 <p>最近对我的笔记应用<a href="https://itunes.apple.com/cn/app/marknotes/id1059403637?mt=12">MarkNotes</a>动了下小手术，稍加整容，顿感逼格++。<br/></p>
-<h2>废话少说，先来个不看广告看疗效吧</h2><p>改进后是这个样子的:<br/><img src="images/1485901825.706960.png" alt="comment" /><br/>因为可以换肤，也可以是这个样子的:<br/><img src="images/1485902004.452312.png" alt="comment" /><br/></p>
-<p>改进前是这个样子的：<br/><img src="images/1465654663.464199.png" alt="comment" /><br/></p>
-<h2>那么，我到底做了些什么呢</h2><h3>减少界面上的杂色</h3><p>之前的界面，颜色看起来比较杂。<br/>首先是tag 颜色太多。<br/>当初在笔记列表中给tag添加颜色，主要是想让用户更容易分辨不同的tag，因此设计了一个简单的算法，让tag的颜色由 tag中的字符自动计算出来。但是花花绿绿的颜色确实降低了逼格，看起来不酷。<br/>其次编辑器的颜色和外观不一致。<br/>编辑器用柔和颜色的初衷是为了让用户在长时间编辑的时候不至于感觉刺眼。但是其颜色确实和外观有点违和。</p>
+<h2>废话少说，先来个不看广告看疗效吧</h2><p>改进后是这个样子的:<br/><img src="https://ws1.sinaimg.cn/mw690/006lIoPaly1fcfg7p73vnj30m80dw7ex" alt="" /><br/></p>
+<p>因为可以换肤，也可以是这个样子的:<br/><img src="https://ws1.sinaimg.cn/mw690/006lIoPaly1fcfg7rrd25j30m80dwtlp" alt="" /><br/></p>
+<p>改进前是这个样子的：<br/><img src="https://ws1.sinaimg.cn/mw690/006lIoPaly1fcfg7o962fj30m80dw40r" alt="" /><br/></p>
+<h2>那么，我到底做了些什么呢</h2><h3>减少界面上的颜色</h3><p>之前的界面，颜色看起来比较杂。过多的颜色使用对视觉感知产生困扰。<br/>首先是tag 颜色太多。<br/>当初在笔记列表中给tag添加颜色，主要是想让用户更容易分辨不同的tag，因此设计了一个简单的算法，让tag的颜色由 tag中的字符自动计算出来。但是花花绿绿的颜色确实降低了逼格，看起来不酷。<br/>其次编辑器的颜色和外观不一致。<br/>编辑器用柔和颜色的初衷是为了让用户在长时间编辑的时候不至于感觉刺眼。但是其颜色确实和外观有点违和。<br/>同样的道理，笔记列表网格之间的黄色也应该去掉。<br/>这些需要被和谐掉的颜色统统被三种颜色替换掉：白色，黑色和灰色。<br/><h3>打破常规的UI布局，带来不一样的效果</h3>在原来的界面中，只是NSWindow的一个默认效果：上面一个标准的title bar,左边是基于NSSplitViewController的笔记列表。<br/><img src="https://ws1.sinaimg.cn/mw690/006lIoPaly1fcfg7ntg1mj30dg03idgk" alt="" /><br/>这只是一种普通的效果。无法给用户以强烈的感受。<br/>所以，需要整容手术：<br/>第一步，将titlebar设为透明:</p>
+<pre class="prettyprint lang-objc">
 
-    </div>
-    
-</article>
+ [self.window setTitlebarAppearsTransparent:YES];</pre>
+<p>现在title bar没了，但是貌似还占了一些空间。<br/><img src="https://ws1.sinaimg.cn/mw690/006lIoPaly1fcfg7nuiboj30lu06ut9c" alt="" /><br/>第二步，将整个window压缩为 Content View</p>
+<pre class="prettyprint lang-objc">
+
+[self.window setStyleMask:(self.window.styleMask | NSFullSizeContentViewWindowMask)];</pre>
+<p>titlebar完全没了：<br/><img src="https://ws1.sinaimg.cn/mw690/006lIoPaly1fcfg7nhh04j30t005m755" alt="" /><br/>第三步，将列表区和编辑区在视觉上分割开来。<br/>笔记列表采用的是一个NSSplitViewController。在视觉上，由于其颜色和编辑区是一致的，所以在视觉上是混在一起的。<br/>为了将它从编辑区分割开来，需要给它一种不一样的背景色。不过，在macOS中，很多UI组件的背景色是固定的，根本就不给你选择。<br/>差了一些资料后才找到一个比较好的方案: NSBox。在需要变色的组件上放置一个NSBox，将其&quot;box type&quot;设为&quot;custom&quot;( 这步比较关键，否则在storyboard中根本就不出现背景色选项)，然后就可以自由设置颜色了。<br/>我将左边区域设置为浅黑，一下子和编辑区有了鲜明的区分。<br/><img src="https://ws1.sinaimg.cn/mw690/006lIoPaly1fcfg7noux1j30sy0bsq61" alt="" /><br/>完美。收工！</p>
+
+                                    </div>
+                                    
+                                </article>
+                                
